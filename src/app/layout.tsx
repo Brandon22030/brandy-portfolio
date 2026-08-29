@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { display, body, monoTech } from "@/lib/fonts";
 import CustomCursor from "@/components/CustomCursor";
+import PageTransition from "@/components/PageTransition";
 import "./globals.css";
 
 const siteUrl = "https://brandon-medehou.dev";
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s - Brandon Medehou",
   },
   description:
-    "Portfolio de Brandon Daniel Medehou, développeur fullstack : React / Next.js, Python, AWS & CI/CD, du cadrage du besoin au déploiement en production.",
+    "Portfolio de Brandon Medehou, développeur fullstack : React / Next.js, Python, AWS & CI/CD, du cadrage du besoin au déploiement en production.",
   keywords: [
     "Brandon Medehou",
     "développeur fullstack",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     "PostgreSQL",
     "Bénin",
   ],
-  authors: [{ name: "Brandon Daniel Medehou" }],
+  authors: [{ name: "Brandon Medehou" }],
   openGraph: {
     type: "website",
     locale: "fr_FR",
@@ -50,11 +51,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="fr"
+      data-scroll-behavior="smooth"
       className={`${display.variable} ${body.variable} ${monoTech.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
         <CustomCursor />
-        {children}
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   );

@@ -1,12 +1,25 @@
--- À exécuter une fois dans le SQL editor de ton projet Supabase
+-- À exécuter dans le SQL editor de ton projet Supabase
 -- (dashboard.supabase.com → ton projet → SQL Editor → New query).
+-- Script entièrement réexécutable (create/alter "if not exists",
+-- "drop policy if exists" avant chaque "create policy").
+
+-- ---------------------------------------------------------------------
+-- projects
+-- ---------------------------------------------------------------------
 
 create table if not exists public.projects (
   id uuid primary key default gen_random_uuid(),
+  slug text,
   name text not null,
   description text not null,
+  intro text,
+  features text[],
+  category text,
+  client text,
+  project_date text,
   stack text[] not null default '{}',
   image_url text,
+  gallery_urls text[],
   live_url text,
   github_url text,
   figma_url text,
@@ -14,10 +27,62 @@ create table if not exists public.projects (
   created_at timestamptz not null default now()
 );
 
--- Safe to re-run even if `projects` already existed before `image_url` was added.
+-- Safe to re-run even if `projects` already existed before these columns were added.
 alter table public.projects add column if not exists image_url text;
+alter table public.projects add column if not exists gallery_urls text[];
+alter table public.projects add column if not exists slug text;
+alter table public.projects add column if not exists intro text;
+alter table public.projects add column if not exists features text[];
+alter table public.projects add column if not exists category text;
+alter table public.projects add column if not exists client text;
+alter table public.projects add column if not exists project_date text;
+
+-- Backfill a slug for any existing row that doesn't have one yet (simple
+-- ASCII slugify — good enough as a fallback; edit per-project in /admin if
+-- a name has accents you'd rather see spelled out in the URL).
+update public.projects
+set slug = trim(both '-' from regexp_replace(lower(name), '[^a-z0-9]+', '-', 'g'))
+where slug is null or slug = '';
+
+-- Disambiguate any duplicate slugs (e.g. two projects with the same name)
+-- before the unique constraint below. Window functions can't be used
+-- directly in a HAVING clause, so the duplicate check is wrapped in a
+-- subquery instead.
+do $$
+declare
+  project_record record;
+begin
+  for project_record in
+    select id, slug
+    from (
+      select id, slug, count(*) over (partition by slug) as slug_count
+      from public.projects
+      where slug is not null
+    ) ranked
+    where slug_count > 1
+  loop
+    update public.projects
+    set slug = trim(both '-' from slug) || '-' || replace(id::text, '-', '')
+    where id = project_record.id;
+  end loop;
+end $$;
+
+alter table public.projects alter column slug set not null;
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint where conname = 'projects_slug_unique'
+  ) then
+    alter table public.projects add constraint projects_slug_unique unique (slug);
+  end if;
+end $$;
 
 alter table public.projects enable row level security;
+
+drop policy if exists "Public can read projects" on public.projects;
+drop policy if exists "Authenticated users can insert projects" on public.projects;
+drop policy if exists "Authenticated users can update projects" on public.projects;
+drop policy if exists "Authenticated users can delete projects" on public.projects;
 
 -- Lecture publique : la page portfolio doit pouvoir lire les projets sans être connectée.
 create policy "Public can read projects"
@@ -69,6 +134,9 @@ create table if not exists public.profile (
 
 alter table public.profile enable row level security;
 
+drop policy if exists "Public can read profile" on public.profile;
+drop policy if exists "Authenticated users can update profile" on public.profile;
+
 create policy "Public can read profile"
   on public.profile for select to anon, authenticated using (true);
 
@@ -91,6 +159,11 @@ create table if not exists public.experience (
 );
 
 alter table public.experience enable row level security;
+
+drop policy if exists "Public can read experience" on public.experience;
+drop policy if exists "Authenticated users can insert experience" on public.experience;
+drop policy if exists "Authenticated users can update experience" on public.experience;
+drop policy if exists "Authenticated users can delete experience" on public.experience;
 
 create policy "Public can read experience"
   on public.experience for select to anon, authenticated using (true);
@@ -117,6 +190,11 @@ create table if not exists public.skill_groups (
 );
 
 alter table public.skill_groups enable row level security;
+
+drop policy if exists "Public can read skill_groups" on public.skill_groups;
+drop policy if exists "Authenticated users can insert skill_groups" on public.skill_groups;
+drop policy if exists "Authenticated users can update skill_groups" on public.skill_groups;
+drop policy if exists "Authenticated users can delete skill_groups" on public.skill_groups;
 
 create policy "Public can read skill_groups"
   on public.skill_groups for select to anon, authenticated using (true);
@@ -145,6 +223,11 @@ create table if not exists public.education (
 
 alter table public.education enable row level security;
 
+drop policy if exists "Public can read education" on public.education;
+drop policy if exists "Authenticated users can insert education" on public.education;
+drop policy if exists "Authenticated users can update education" on public.education;
+drop policy if exists "Authenticated users can delete education" on public.education;
+
 create policy "Public can read education"
   on public.education for select to anon, authenticated using (true);
 
@@ -172,6 +255,11 @@ create table if not exists public.clients (
 
 alter table public.clients enable row level security;
 
+drop policy if exists "Public can read clients" on public.clients;
+drop policy if exists "Authenticated users can insert clients" on public.clients;
+drop policy if exists "Authenticated users can update clients" on public.clients;
+drop policy if exists "Authenticated users can delete clients" on public.clients;
+
 create policy "Public can read clients"
   on public.clients for select to anon, authenticated using (true);
 
@@ -191,6 +279,11 @@ create policy "Authenticated users can delete clients"
 insert into storage.buckets (id, name, public)
 values ('media', 'media', true)
 on conflict (id) do nothing;
+
+drop policy if exists "Public can read media" on storage.objects;
+drop policy if exists "Authenticated users can upload media" on storage.objects;
+drop policy if exists "Authenticated users can update media" on storage.objects;
+drop policy if exists "Authenticated users can delete media" on storage.objects;
 
 create policy "Public can read media"
   on storage.objects for select to anon, authenticated using (bucket_id = 'media');

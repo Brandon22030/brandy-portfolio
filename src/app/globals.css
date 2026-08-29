@@ -56,6 +56,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
+
 /* Custom cursor: activated by CustomCursor.tsx only on fine-pointer
    devices once JS has loaded, so touch devices and no-JS keep the
    native cursor + the button-pointer fallback above. */

@@ -1,7 +1,7 @@
 export type Stat = { value: string; label: string };
 
 export const profile = {
-  name: "Brandon Daniel Medehou",
+  name: "Brandon Medehou",
   role: "Développeur Fullstack",
   tagline: "React / Next.js · Python · AWS & CI/CD",
   location: "Cotonou, Bénin · Mobile / full remote",
@@ -136,10 +136,17 @@ export const skills: SkillGroup[] = [
 ];
 
 export type Project = {
+  slug: string;
   name: string;
   description: string;
+  intro?: string;
+  features?: string[];
+  category?: string;
+  client?: string;
+  date?: string;
   stack: string[];
   imageUrl?: string;
+  galleryUrls?: string[];
   liveUrl?: string;
   githubUrl?: string;
   figmaUrl?: string;
@@ -147,18 +154,21 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "lokata",
     name: "Lokata",
     description:
       "Plateforme de location de matériel informatique, menée seul du cahier des charges au produit : modèle économique, modélisation des données, parcours utilisateur, authentification et spécification technique d'un agent de sécurité poste client (isolation de session, licences hors ligne signées Ed25519).",
     stack: ["Next.js", "JavaScript", "Supabase"],
   },
   {
+    slug: "veille-et-experimentation-continues",
     name: "Veille et expérimentation continues",
     description:
       "Intégration d'APIs de modèles de langage dans des applications web et mobile, exploration de Three.js / React Three Fiber pour le rendu 3D temps réel sur le web.",
     stack: ["LLM APIs", "Three.js", "React Three Fiber"],
   },
   {
+    slug: "la-cite-du-rancard",
     name: "La Cité Du Rancard",
     description:
       "Plateforme de gestion d'événements et de réseautage social pour organiser et promouvoir des événements à Cotonou, Bénin : vente de billets, réservation de stands, gestion de partenaires et matchmaking entre participants.",
@@ -166,6 +176,7 @@ export const projects: Project[] = [
     liveUrl: "https://www.lacitedurancard.com/",
   },
   {
+    slug: "fairy-dust-portfolio",
     name: "Fairy Dust Portfolio",
     description:
       "Site portfolio professionnel pour une assistante virtuelle, présentée sous le nom 'La Petite Fée de l'Assistance Virtuelle'.",
@@ -173,6 +184,7 @@ export const projects: Project[] = [
     liveUrl: "https://stevie-alyda.netlify.app/",
   },
   {
+    slug: "benin-culture-360",
     name: "Benin Culture 360",
     description: "Application web interactive pour explorer et découvrir la riche culture béninoise.",
     stack: ["React", "TypeScript", "TailwindCSS", "Supabase"],
@@ -180,6 +192,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Brandon22030/benin-culture-360",
   },
   {
+    slug: "bloghub",
     name: "BlogHub",
     description:
       "Plateforme de blogging moderne construite avec un backend NestJS et un frontend Next.js.",
@@ -189,18 +202,21 @@ export const projects: Project[] = [
     figmaUrl: "https://www.figma.com/design/xrWs7bMQsRRWRAmKUu7JuP/Blog-Hub?node-id=0-1&t=QHQJrF0wZm3ipHvR-1",
   },
   {
+    slug: "festivalis",
     name: "Festivalis",
     description: "Plateforme d'événements communautaires conçue spécifiquement pour le Bénin.",
     stack: ["React", "TypeScript", "Vite", "TailwindCSS", "Supabase"],
     githubUrl: "https://github.com/Brandon22030/Festivalis",
   },
   {
+    slug: "heritagegourmet",
     name: "HeritageGourmet",
     description: "Application web dédiée à la préservation et au partage des recettes familiales.",
     stack: ["React", "TypeScript", "Vite", "Supabase", "TailwindCSS"],
     githubUrl: "https://github.com/brandy-the-dev/heritage-gourmet",
   },
   {
+    slug: "trello-wordpress",
     name: "Trello WordPress",
     description:
       "Ajout et affichage de tâches avec Vue.js et Pinia, en s'appuyant sur l'API REST de WordPress.",
@@ -208,12 +224,14 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Brandon22030/Trello-WordPress",
   },
   {
+    slug: "yowl",
     name: "YOWL",
     description: "Application permettant de commenter tout ce qui se passe sur Internet.",
     stack: ["Vue.js", "Pinia", "TailwindCSS", "Laravel", "MySQL", "Docker"],
     githubUrl: "https://github.com/Brandon22030/yowl",
   },
   {
+    slug: "lavotech",
     name: "LavoTech",
     description:
       "Plateforme de services de pressing en ligne : réservation, suivi de commande en temps réel et approche écologique.",
@@ -221,6 +239,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Brandon22030/lavoTech",
   },
   {
+    slug: "sgama",
     name: "SGAMA",
     description:
       "Système de Gestion d'Atelier Mécanique Automobile : rendez-vous, véhicules, interventions et relation client.",
@@ -228,6 +247,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Brandon22030/SGAMA",
   },
   {
+    slug: "robogenius-lab",
     name: "RoboGenius Lab",
     description:
       "Plateforme éducative pour l'apprentissage de la robotique : parcours personnalisés, simulateur interactif et ressources pédagogiques.",
