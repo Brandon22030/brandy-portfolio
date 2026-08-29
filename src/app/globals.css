@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+:root {
+  --background: #05070a;
+  --background-elevated: #0a0e14;
+  --foreground: #e6edf3;
+  --muted: #8b98a5;
+  --accent: #22d3ee;
+  --accent-2: #a78bfa;
+  --panel: rgba(255, 255, 255, 0.04);
+  --panel-border: rgba(255, 255, 255, 0.09);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-elevated: var(--background-elevated);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-panel: var(--panel);
+  --color-panel-border: var(--panel-border);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono-tech);
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+::selection {
+  background: var(--accent);
+  color: #04121a;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.bg-glow {
+  background: radial-gradient(
+      color-mix(in oklab, var(--accent) 45%, transparent) 1px,
+      transparent 1.5px
+    )
+    0 0 / 48px 48px,
+    var(--background);
+}
+
+/*
+ * Scoped to a fixed-height element (see CanvasBackground) rather than the
+ * full (multi-thousand-px) body: a radial-gradient this size positioned by
+ * percentage against the whole document height triggers a visible seam at
+ * Chromium's composited-layer tile boundary. Keeping it height-bound avoids
+ * that entirely.
+ */
+.hero-glow {
+  background: radial-gradient(
+      85rem 65rem at 15% -10%,
+      color-mix(in oklab, var(--accent) 12%, transparent) 0%,
+      color-mix(in oklab, var(--accent) 6%, transparent) 40%,
+      color-mix(in oklab, var(--accent) 2%, transparent) 70%,
+      transparent 100%
+    ),
+    radial-gradient(
+      75rem 58rem at 100% 8%,
+      color-mix(in oklab, var(--accent-2) 10%, transparent) 0%,
+      color-mix(in oklab, var(--accent-2) 5%, transparent) 40%,
+      color-mix(in oklab, var(--accent-2) 1.5%, transparent) 70%,
+      transparent 100%
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
