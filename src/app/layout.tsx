@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: "Brandon Medehou - Développeur Fullstack",
-    template: "%s — Brandon Medehou",
+    template: "%s - Brandon Medehou",
   },
   description:
     "Portfolio de Brandon Daniel Medehou, développeur fullstack : React / Next.js, Python, AWS & CI/CD, du cadrage du besoin au déploiement en production.",
@@ -30,14 +30,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "fr_FR",
     url: siteUrl,
-    title: "Brandon Medehou — Développeur Fullstack",
+    title: "Brandon Medehou - Développeur Fullstack",
     description:
       "React / Next.js, Python, AWS & CI/CD. Développeur fullstack couvrant toute la chaîne, du cadrage du besoin au déploiement en production.",
     siteName: "Brandon Medehou",
   },
   twitter: {
     card: "summary",
-    title: "Brandon Medehou — Développeur Fullstack",
+    title: "Brandon Medehou - Développeur Fullstack",
     description:
       "React / Next.js, Python, AWS & CI/CD. Développeur fullstack couvrant toute la chaîne, du cadrage du besoin au déploiement en production.",
   },
