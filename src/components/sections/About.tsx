@@ -9,7 +9,7 @@ export default async function About() {
     <Section
       id="about"
       eyebrow="À propos"
-      title="Du rendu React aux données qui l'alimentent"
+      title="De l'interface au déploiement, toute la chaîne"
       description={profile.aboutDescription}
     >
       <div className="grid gap-6 sm:grid-cols-3">

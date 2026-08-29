@@ -8,20 +8,21 @@ const siteUrl = "https://brandon-medehou.dev";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Brandon Medehou — Développeur Front-End & Data",
+    default: "Brandon Medehou - Développeur Fullstack",
     template: "%s — Brandon Medehou",
   },
   description:
-    "Portfolio de Brandon Daniel Medehou, développeur Front-End & Data : React / Next.js, Python & APIs, PostgreSQL, performance et SEO technique.",
+    "Portfolio de Brandon Daniel Medehou, développeur fullstack : React / Next.js, Python, AWS & CI/CD, du cadrage du besoin au déploiement en production.",
   keywords: [
     "Brandon Medehou",
-    "développeur front-end",
+    "développeur fullstack",
     "Next.js",
     "React",
     "Python",
+    "AWS",
+    "CI/CD",
     "Odoo",
     "PostgreSQL",
-    "développeur data",
     "Bénin",
   ],
   authors: [{ name: "Brandon Daniel Medehou" }],
@@ -29,16 +30,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "fr_FR",
     url: siteUrl,
-    title: "Brandon Medehou — Développeur Front-End & Data",
+    title: "Brandon Medehou — Développeur Fullstack",
     description:
-      "React / Next.js, Python & APIs, PostgreSQL. Développeur front-end attaché à la performance et à la lisibilité des données.",
+      "React / Next.js, Python, AWS & CI/CD. Développeur fullstack couvrant toute la chaîne, du cadrage du besoin au déploiement en production.",
     siteName: "Brandon Medehou",
   },
   twitter: {
     card: "summary",
-    title: "Brandon Medehou — Développeur Front-End & Data",
+    title: "Brandon Medehou — Développeur Fullstack",
     description:
-      "React / Next.js, Python & APIs, PostgreSQL. Développeur front-end attaché à la performance et à la lisibilité des données.",
+      "React / Next.js, Python, AWS & CI/CD. Développeur fullstack couvrant toute la chaîne, du cadrage du besoin au déploiement en production.",
   },
   alternates: {
     canonical: siteUrl,

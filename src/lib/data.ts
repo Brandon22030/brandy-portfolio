@@ -2,21 +2,21 @@ export type Stat = { value: string; label: string };
 
 export const profile = {
   name: "Brandon Daniel Medehou",
-  role: "Développeur Front-End & Data",
-  tagline: "React / Next.js · Python & APIs",
+  role: "Développeur Fullstack",
+  tagline: "React / Next.js · Python · AWS & CI/CD",
   location: "Cotonou, Bénin · Mobile / full remote",
   email: "brandonmedehou2203@gmail.com",
   github: "https://github.com/Brandon22030",
   linkedin: "https://linkedin.com/in/brandon-medehou",
   photo: "/images/brandon.jpg",
   summary:
-    "Développeur front-end avec 2 ans d'expérience professionnelle et plus de 4 applications web livrées en production (Next.js, React, TypeScript). Je construis aussi les APIs Python et les modèles de données qui alimentent ces interfaces : modules comptables Odoo manipulant de gros volumes sur PostgreSQL, route d'API centralisée sur AWS API Gateway, dashboard d'analyse de données bancaires à la Société Générale Bénin. Attaché à la performance (Core Web Vitals), à la qualité du rendu et à la lisibilité des données restituées. Fort intérêt pour l'IA appliquée aux produits.",
+    "Développeur fullstack avec 2 ans d'expérience et plus de 4 applications web livrées en production en React, Next.js et JavaScript. Je couvre la chaîne complète : cadrage du besoin, développement des interfaces, APIs et modules back-end en Python, puis déploiement et hébergement sur AWS avec pipelines CI/CD automatisées. J'assure aussi le support de production, habitué au travail en équipe agile (daily, revues de code).",
   aboutDescription:
-    "Un profil qui relie l'interface et la donnée : je construis les écrans, mais aussi les APIs et les modèles qui les nourrissent.",
+    "Un profil qui couvre toute la chaîne : interfaces, APIs, données et déploiement, du cadrage à la mise en production.",
   stats: [
     { value: "2+", label: "Ans d'expérience" },
     { value: "4+", label: "Apps en production" },
-    { value: "Front-end & Data", label: "Stack" },
+    { value: "Fullstack", label: "Stack" },
   ] as Stat[],
 };
 
@@ -31,17 +31,18 @@ export type Experience = {
 export const experience: Experience[] = [
   {
     company: "ADELABS",
-    role: "Développeur Front-End & Odoo",
+    role: "Développeur Fullstack & Odoo",
     period: "juin 2025 — août 2026",
     location: "Cotonou, Bénin",
     highlights: [
-      "Développé des modules et APIs Python (Odoo) dans le périmètre comptable : extraction et restitution de gros volumes de données sur PostgreSQL — exports FEC multi-formats, reconstitution d'inventaires à date, déclarations de TVA.",
-      "Mis en place une route POST sur AWS API Gateway pour centraliser et fiabiliser le traitement des formulaires web de plusieurs sites livrés.",
-      "Conçu et livré 4+ applications web en production avec Next.js et Strapi : interfaces React/TypeScript, modélisation des contenus et intégration d'APIs REST.",
-      "Optimisé la performance et les Core Web Vitals (LCP, CLS) via le choix du mode de rendu SSR/SSG et l'optimisation des images.",
-      "Testé et validé les APIs REST avec Postman avant intégration : codes HTTP, formats de réponse et gestion des cas d'erreur.",
-      "Diagnostiqué et corrigé des incidents applicatifs et anomalies de données en production sur PostgreSQL/Odoo, en collaboration directe avec les utilisateurs métier.",
-      "Mis en œuvre le SEO technique des sites livrés : JSON-LD/Schema.org, Metadata API de Next.js, Open Graph, balises canoniques, sitemap.xml et robots.txt.",
+      "Conçu et livré 4+ applications web en production en React / Next.js / JavaScript (ES6+) : composants implémentés à partir de maquettes Figma, architecture en composants réutilisables, responsivité et compatibilité navigateurs.",
+      "Construit la chaîne d'hébergement AWS de bout en bout : bucket S3, distribution CloudFront rattachée au bucket, utilisateur IAM dédié et raccordement à un nom de domaine personnalisé.",
+      "Mis en place les pipelines CI/CD sous GitLab CI (.gitlab-ci.yml) : chaque livraison en production déclenche automatiquement l'exécution des tests puis le déploiement.",
+      "Développé des modules back-end en Python (Odoo, périmètre comptable) manipulant de gros volumes sur PostgreSQL : exports FEC multi-formats, pièces comptables, inventaires reconstitués à date et déclarations de TVA.",
+      "Intégré et validé des APIs REST avec Postman avant branchement (codes HTTP, formats de réponse, cas d'erreur) et mis en place une route POST sur AWS API Gateway pour centraliser le traitement des formulaires.",
+      "Assuré le support de production : diagnostic, reproduction et correction d'incidents applicatifs et d'anomalies de données, en lien direct avec les utilisateurs métier.",
+      "Travaillé en équipe agile : daily quotidiens, revues de code régulières avec le lead technique et encadrement d'un stagiaire sur un mois.",
+      "Optimisé les performances et les Core Web Vitals (LCP, CLS) via le rendu SSR/SSG et l'optimisation des images ; mis en œuvre le SEO technique des sites livrés.",
     ],
   },
   {
@@ -49,9 +50,7 @@ export const experience: Experience[] = [
     role: "Stagiaire Développeur Web",
     period: "nov. 2024 — mars 2025",
     location: "Cotonou, Bénin",
-    highlights: [
-      "Développé un dashboard interactif d'analyse de données bancaires : agrégation des données, rapports détaillés et visualisations dynamiques conçus avec et pour les équipes métier.",
-    ],
+    highlights: ["Stage au sein de la direction informatique d'un grand groupe bancaire."],
   },
   {
     company: "Vertim Coders",
@@ -59,17 +58,16 @@ export const experience: Experience[] = [
     period: "janv. 2024 — avr. 2024",
     location: "Tankpè, Bénin",
     highlights: [
-      "Intégré des interfaces Vue.js à partir de maquettes en respectant les contraintes d'ergonomie, et mis en ligne des sites WordPress (PHP) pour les clients de l'agence.",
+      "Intégré des interfaces Vue.js à partir de maquettes en respectant les contraintes d'ergonomie, et mis en ligne des sites WordPress pour les clients de l'agence.",
     ],
   },
   {
-    company: "Freelance",
+    company: "Freelance — BRANDYBEN",
     role: "Développeur & Designer indépendant",
     period: "2023 — 2024",
     location: "Cotonou, Bénin",
     highlights: [
-      "Développement de sites, thèmes et extensions WordPress sur mesure (PHP) pour différents clients.",
-      "Conception de maquettes d'interfaces sous Figma, création d'identités visuelles et de supports graphiques.",
+      "Conception de maquettes sous Figma, création d'identités visuelles et de logos, développement de sites, thèmes et extensions WordPress sur mesure — du besoin client à la livraison.",
     ],
   },
 ];
@@ -81,23 +79,22 @@ export type SkillGroup = {
 
 export const skills: SkillGroup[] = [
   {
-    category: "Front-end & UI",
+    category: "Front-end",
     items: [
-      "Next.js",
+      "JavaScript moderne (ES6+)",
       "React.js",
-      "TypeScript",
-      "JavaScript",
+      "Next.js",
       "Vue.js",
+      "HTML5 sémantique",
+      "CSS3 / SCSS (BEM)",
       "Tailwind CSS",
-      "HTML sémantique",
-      "CSS/SCSS",
-      "Figma",
+      "Responsive & compatibilité navigateurs",
     ],
   },
   {
     category: "Back-end & APIs",
     items: [
-      "Python (modules et routes Odoo)",
+      "Python (modules Odoo)",
       "Node.js",
       "NestJS",
       "Express.js",
@@ -106,20 +103,35 @@ export const skills: SkillGroup[] = [
     ],
   },
   {
+    category: "Cloud & DevOps",
+    items: ["AWS (S3, CloudFront, IAM, API Gateway)", "GitLab CI", "Docker", "Git / GitHub"],
+  },
+  {
     category: "Données",
-    items: ["PostgreSQL", "MySQL", "MongoDB", "Supabase", "Modélisation & agrégation", "Exports & dashboards"],
+    items: ["PostgreSQL", "MySQL", "MongoDB", "Supabase", "Modélisation & agrégation", "Exports & restitution"],
   },
   {
-    category: "Performance & qualité",
-    items: ["Core Web Vitals (LCP, CLS)", "SSR/SSG", "Optimisation d'images", "Diagnostic prod"],
+    category: "Qualité & méthodes",
+    items: [
+      "Agile (daily, revues de code)",
+      "Recette & mise en production",
+      "Support & correction d'anomalies",
+      "Core Web Vitals (LCP, CLS)",
+      "SSR/SSG",
+      "Mentorat",
+    ],
   },
   {
-    category: "Cloud & outils",
-    items: ["AWS API Gateway", "Docker", "Git / GitHub", "PageSpeed Insights", "Google Search Console"],
-  },
-  {
-    category: "SEO technique",
-    items: ["JSON-LD / Schema.org", "Metadata API Next.js", "Open Graph", "sitemap.xml", "robots.txt"],
+    category: "Design, CMS & mobile",
+    items: [
+      "Figma",
+      "SEO technique (JSON-LD, Metadata API, Open Graph)",
+      "Strapi",
+      "WordPress / WooCommerce",
+      "React Native",
+      "Expo",
+      "Flutter",
+    ],
   },
 ];
 
@@ -137,14 +149,14 @@ export const projects: Project[] = [
   {
     name: "Lokata",
     description:
-      "Plateforme de location de matériel informatique, conçue et développée seul, du cahier des charges au produit : modélisation des données, authentification, et spécification d'un agent de sécurité poste client (isolation de session, signature Ed25519).",
-    stack: ["Next.js", "TypeScript", "Supabase"],
+      "Plateforme de location de matériel informatique, menée seul du cahier des charges au produit : modèle économique, modélisation des données, parcours utilisateur, authentification et spécification technique d'un agent de sécurité poste client (isolation de session, licences hors ligne signées Ed25519).",
+    stack: ["Next.js", "JavaScript", "Supabase"],
   },
   {
-    name: "Intégration d'IA générative",
+    name: "Veille et expérimentation continues",
     description:
-      "Intégration d'APIs de modèles de langage dans des applications personnelles (planification quotidienne, génération de contenus), avec traitement des réponses structurées et gestion des erreurs côté back-end.",
-    stack: ["LLM APIs", "Node.js", "Réponses structurées"],
+      "Intégration d'APIs de modèles de langage dans des applications web et mobile, exploration de Three.js / React Three Fiber pour le rendu 3D temps réel sur le web.",
+    stack: ["LLM APIs", "Three.js", "React Three Fiber"],
   },
   {
     name: "La Cité Du Rancard",
@@ -237,7 +249,7 @@ export const education: EducationItem[] = [
     period: "juin 2024 — juin 2025",
   },
   {
-    title: "Licence 3 d'Anglais",
+    title: "Licence 3 d'Anglais (Bac+3)",
     school: "Faculté des Lettres, Langues et Arts de Calavi (FLLAC) · Abomey-Calavi, Bénin",
     period: "2021 — 2024",
   },

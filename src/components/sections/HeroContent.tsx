@@ -24,9 +24,9 @@ export default function HeroContent({ profile }: { profile: Profile }) {
           </span>
 
           <h1 className="mt-6 text-balance font-display text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-            <span className="text-muted">Des interfaces claires,</span>
+            <span className="text-muted">Des interfaces soignées,</span>
             <br />
-            <span className="text-foreground">portées par la donnée.</span>
+            <span className="text-foreground">du concept au déploiement.</span>
           </h1>
 
           <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-foreground/80">

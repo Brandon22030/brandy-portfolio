@@ -11,7 +11,7 @@ export default async function Experience() {
       id="experience"
       eyebrow="Parcours"
       title="Expérience professionnelle"
-      description="Du développement WordPress freelance aux modules Odoo/PostgreSQL en production, en passant par la data bancaire."
+      description="Du développement WordPress freelance aux applications fullstack en production, avec hébergement AWS et pipelines CI/CD."
     >
       <RevealGroup className="relative space-y-6 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-px before:bg-panel-border sm:before:left-[15px]">
         {experience.map((exp) => (

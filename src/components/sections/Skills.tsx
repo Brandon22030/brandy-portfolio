@@ -11,8 +11,8 @@ export default async function Skills() {
     <Section
       id="skills"
       eyebrow="Compétences"
-      title="Une boîte à outils front-end & data"
-      description="De l'interface React à la donnée PostgreSQL, en passant par la performance et le SEO technique."
+      title="Une boîte à outils fullstack"
+      description="De l'interface React au déploiement AWS, en passant par la donnée, la qualité et le mobile."
     >
       <RevealGroup className="grid gap-6 sm:grid-cols-2">
         {skills.map((group) => (
