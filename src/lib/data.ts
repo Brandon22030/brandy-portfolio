@@ -1,3 +1,5 @@
+export type Stat = { value: string; label: string };
+
 export const profile = {
   name: "Brandon Daniel Medehou",
   role: "Développeur Front-End & Data",
@@ -9,7 +11,14 @@ export const profile = {
   photo: "/images/brandon.jpg",
   summary:
     "Développeur front-end avec 2 ans d'expérience professionnelle et plus de 4 applications web livrées en production (Next.js, React, TypeScript). Je construis aussi les APIs Python et les modèles de données qui alimentent ces interfaces : modules comptables Odoo manipulant de gros volumes sur PostgreSQL, route d'API centralisée sur AWS API Gateway, dashboard d'analyse de données bancaires à la Société Générale Bénin. Attaché à la performance (Core Web Vitals), à la qualité du rendu et à la lisibilité des données restituées. Fort intérêt pour l'IA appliquée aux produits.",
-} as const;
+  aboutDescription:
+    "Un profil qui relie l'interface et la donnée : je construis les écrans, mais aussi les APIs et les modèles qui les nourrissent.",
+  stats: [
+    { value: "2+", label: "Ans d'expérience" },
+    { value: "4+", label: "Apps en production" },
+    { value: "Front-end & Data", label: "Stack" },
+  ] as Stat[],
+};
 
 export type Experience = {
   company: string;
@@ -118,6 +127,7 @@ export type Project = {
   name: string;
   description: string;
   stack: string[];
+  imageUrl?: string;
   liveUrl?: string;
   githubUrl?: string;
   figmaUrl?: string;
@@ -242,6 +252,16 @@ export const languages = [
   { name: "Français", level: "Langue maternelle" },
   { name: "Anglais", level: "Avancé (Licence 3 d'Anglais)" },
 ] as const;
+
+export type Client = {
+  name: string;
+  logoUrl: string;
+  websiteUrl?: string;
+};
+
+// No static clients yet — the "Mes clients" section only renders once
+// clients are added via the admin panel (see src/lib/clients.ts).
+export const clients: Client[] = [];
 
 export const navLinks = [
   { href: "#about", label: "À propos" },

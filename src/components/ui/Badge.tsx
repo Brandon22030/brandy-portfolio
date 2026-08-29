@@ -4,7 +4,7 @@ export default function Badge({ children, className }: { children: React.ReactNo
   return (
     <span
       className={clsx(
-        "inline-flex items-center rounded-full border border-panel-border bg-panel px-3 py-1 font-mono text-xs text-foreground/90",
+        "inline-flex items-center rounded-full border border-panel-border bg-background px-3 py-1 font-mono text-xs text-foreground/80",
         className,
       )}
     >

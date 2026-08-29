@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { display, body, monoTech } from "@/lib/fonts";
+import CustomCursor from "@/components/CustomCursor";
 import "./globals.css";
 
 const siteUrl = "https://brandon-medehou.dev";
@@ -50,7 +51,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="fr"
       className={`${display.variable} ${body.variable} ${monoTech.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-glow font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans">
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   );
 }

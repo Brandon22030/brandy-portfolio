@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #05070a;
-  --background-elevated: #0a0e14;
-  --foreground: #e6edf3;
-  --muted: #8b98a5;
-  --accent: #22d3ee;
-  --accent-2: #a78bfa;
-  --panel: rgba(255, 255, 255, 0.04);
-  --panel-border: rgba(255, 255, 255, 0.09);
+  --background: #faf9f7;
+  --background-elevated: #ffffff;
+  --foreground: #111214;
+  --muted: #6b7280;
+  --accent: #4338ca;
+  --accent-2: #7c3aed;
+  --panel: #ffffff;
+  --panel-border: #e6e4df;
 }
 
 @theme inline {
@@ -26,7 +26,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
 }
 
@@ -37,44 +37,50 @@ body {
 
 ::selection {
   background: var(--accent);
-  color: #04121a;
+  color: #ffffff;
 }
 
 .text-balance {
   text-wrap: balance;
 }
 
-.bg-glow {
-  background: radial-gradient(
-      color-mix(in oklab, var(--accent) 45%, transparent) 1px,
-      transparent 1.5px
-    )
-    0 0 / 48px 48px,
-    var(--background);
+/* Baseline: browsers don't give <button> a pointer cursor by default
+   (only <a href> does) — fix that regardless of the custom cursor below. */
+button:not(:disabled),
+[role="button"],
+a {
+  cursor: pointer;
 }
 
-/*
- * Scoped to a fixed-height element (see CanvasBackground) rather than the
- * full (multi-thousand-px) body: a radial-gradient this size positioned by
- * percentage against the whole document height triggers a visible seam at
- * Chromium's composited-layer tile boundary. Keeping it height-bound avoids
- * that entirely.
- */
-.hero-glow {
-  background: radial-gradient(
-      85rem 65rem at 15% -10%,
-      color-mix(in oklab, var(--accent) 12%, transparent) 0%,
-      color-mix(in oklab, var(--accent) 6%, transparent) 40%,
-      color-mix(in oklab, var(--accent) 2%, transparent) 70%,
-      transparent 100%
-    ),
-    radial-gradient(
-      75rem 58rem at 100% 8%,
-      color-mix(in oklab, var(--accent-2) 10%, transparent) 0%,
-      color-mix(in oklab, var(--accent-2) 5%, transparent) 40%,
-      color-mix(in oklab, var(--accent-2) 1.5%, transparent) 70%,
-      transparent 100%
-    );
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Custom cursor: activated by CustomCursor.tsx only on fine-pointer
+   devices once JS has loaded, so touch devices and no-JS keep the
+   native cursor + the button-pointer fallback above. */
+html.custom-cursor * {
+  cursor: none !important;
+}
+
+html.custom-cursor input,
+html.custom-cursor textarea,
+html.custom-cursor select,
+html.custom-cursor [contenteditable="true"] {
+  cursor: text !important;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

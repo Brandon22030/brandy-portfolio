@@ -1,10 +1,12 @@
 import Section from "@/components/ui/Section";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
-import GlassCard from "@/components/ui/GlassCard";
+import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
-import { skills } from "@/lib/data";
+import { getSkillGroups } from "@/lib/skills";
 
-export default function Skills() {
+export default async function Skills() {
+  const skills = await getSkillGroups();
+
   return (
     <Section
       id="skills"
@@ -15,14 +17,14 @@ export default function Skills() {
       <RevealGroup className="grid gap-6 sm:grid-cols-2">
         {skills.map((group) => (
           <RevealItem key={group.category}>
-            <GlassCard className="h-full">
+            <Card className="h-full">
               <h3 className="font-display text-base font-semibold text-foreground">{group.category}</h3>
               <div className="mt-4 flex flex-wrap gap-2">
                 {group.items.map((item) => (
                   <Badge key={item}>{item}</Badge>
                 ))}
               </div>
-            </GlassCard>
+            </Card>
           </RevealItem>
         ))}
       </RevealGroup>

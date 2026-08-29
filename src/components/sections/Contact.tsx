@@ -1,10 +1,12 @@
 import { Mail } from "lucide-react";
 import Section from "@/components/ui/Section";
-import GlassCard from "@/components/ui/GlassCard";
+import Card from "@/components/ui/Card";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
-import { profile } from "@/lib/data";
+import { getProfile } from "@/lib/about";
 
-export default function Contact() {
+export default async function Contact() {
+  const profile = await getProfile();
+
   return (
     <Section
       id="contact"
@@ -12,7 +14,7 @@ export default function Contact() {
       title="Discutons de votre projet"
       description="Disponible pour des missions front-end, data ou full remote."
     >
-      <GlassCard className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-center">
+      <Card className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-center">
         <div>
           <p className="font-display text-2xl font-semibold text-foreground">{profile.name}</p>
           <p className="mt-1 text-muted">{profile.location}</p>
@@ -20,7 +22,7 @@ export default function Contact() {
         <div className="flex flex-wrap gap-3">
           <a
             href={`mailto:${profile.email}`}
-            className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 font-mono text-sm font-medium text-[#04121a] transition-transform hover:scale-[1.03]"
+            className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 font-mono text-sm font-medium text-white transition-transform hover:scale-[1.03]"
           >
             <Mail size={16} />
             {profile.email}
@@ -44,7 +46,7 @@ export default function Contact() {
             GitHub
           </a>
         </div>
-      </GlassCard>
+      </Card>
     </Section>
   );
 }

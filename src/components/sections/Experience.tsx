@@ -1,9 +1,11 @@
 import Section from "@/components/ui/Section";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
-import GlassCard from "@/components/ui/GlassCard";
-import { experience } from "@/lib/data";
+import Card from "@/components/ui/Card";
+import { getExperience } from "@/lib/experience";
 
-export default function Experience() {
+export default async function Experience() {
+  const experience = await getExperience();
+
   return (
     <Section
       id="experience"
@@ -16,7 +18,7 @@ export default function Experience() {
           <RevealItem key={exp.company} className="relative pl-10 sm:pl-12">
             <span className="absolute left-0 top-2 h-[22px] w-[22px] rounded-full border border-accent/50 bg-background-elevated sm:h-[30px] sm:w-[30px]" />
             <span className="absolute left-[7px] top-[13px] h-2 w-2 rounded-full bg-accent sm:left-[11px] sm:top-[17px]" />
-            <GlassCard>
+            <Card>
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <h3 className="font-display text-lg font-semibold text-foreground">
                   {exp.role} <span className="text-muted">— {exp.company}</span>
@@ -32,7 +34,7 @@ export default function Experience() {
                   </li>
                 ))}
               </ul>
-            </GlassCard>
+            </Card>
           </RevealItem>
         ))}
       </RevealGroup>
