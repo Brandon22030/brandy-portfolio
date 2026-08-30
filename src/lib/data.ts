@@ -35,7 +35,7 @@ export const experience: Experience[] = [
     period: "juin 2025 — août 2026",
     location: "Cotonou, Bénin",
     highlights: [
-      "Conçu et livré 4+ applications web en production en React / Next.js / JavaScript (ES6+) : composants implémentés à partir de maquettes Figma, architecture en composants réutilisables, responsivité et compatibilité navigateurs.",
+      "Conçu et livré 4+ applications web en production en React / Next.js / JavaScript (ES6+) : composants implémentés à partir de maquettes Figma, stylés en SASS/SCSS (architecture BEM) pour sa flexibilité, architecture en composants réutilisables, responsivité et compatibilité navigateurs.",
       "Construit la chaîne d'hébergement AWS de bout en bout : bucket S3, distribution CloudFront rattachée au bucket, utilisateur IAM dédié et raccordement à un nom de domaine personnalisé.",
       "Mis en place les pipelines CI/CD sous GitLab CI (.gitlab-ci.yml) : chaque livraison en production déclenche automatiquement l'exécution des tests puis le déploiement.",
       "Développé des modules back-end en Python (Odoo, périmètre comptable) manipulant de gros volumes sur PostgreSQL : exports FEC multi-formats, pièces comptables, inventaires reconstitués à date et déclarations de TVA.",
