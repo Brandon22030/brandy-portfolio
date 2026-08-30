@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { deleteSkillGroup } from "@/app/admin/actions/skills";
+import DeleteButton from "@/app/admin/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -46,11 +47,7 @@ export default async function AdminSkillsPage() {
               >
                 Éditer
               </Link>
-              <form action={deleteSkillGroup.bind(null, group.id)}>
-                <button type="submit" className="font-mono text-xs text-red-600 hover:underline">
-                  Supprimer
-                </button>
-              </form>
+              <DeleteButton action={deleteSkillGroup.bind(null, group.id)} itemLabel={group.category} />
             </div>
           </div>
         ))}

@@ -153,35 +153,33 @@ export default function ProjectForm({
 
       <div>
         <label className={label}>Photos supplémentaires (galerie, optionnel)</label>
+        <p className="mt-1 text-xs text-muted">
+          La couverture ci-dessus reste toujours la première image. Chaque photo ajoutée ici vient s&apos;ajouter à
+          la suite.
+        </p>
         {defaults?.gallery_urls && defaults.gallery_urls.length > 0 ? (
-          <div className="mt-2 flex flex-wrap gap-2">
+          <div className="mt-3 flex flex-wrap gap-3">
             {defaults.gallery_urls.map((url) => (
-              <div key={url} className="relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border border-panel-border">
-                <Image src={url} alt="" fill className="object-cover" />
+              <div key={url} className="w-24">
+                <input type="hidden" name="existingGallery" value={url} />
+                <div className="relative h-16 w-24 overflow-hidden rounded-lg border border-panel-border">
+                  <Image src={url} alt="" fill className="object-cover" />
+                </div>
+                <label className="mt-1 flex items-center gap-1.5 font-mono text-[11px] text-muted">
+                  <input type="checkbox" name="removeGallery" value={url} />
+                  Retirer
+                </label>
               </div>
             ))}
           </div>
         ) : null}
-        <label htmlFor="galleryUrls" className="mt-3 block font-mono text-xs text-muted">
-          URLs à conserver (une par ligne — supprime une ligne pour retirer cette photo)
-        </label>
-        <textarea
-          id="galleryUrls"
-          name="galleryUrls"
-          rows={3}
-          defaultValue={defaults?.gallery_urls?.join("\n")}
-          className={field}
-        />
-        <label htmlFor="gallery" className="mt-3 block font-mono text-xs text-muted">
-          Ajouter de nouvelles photos
-        </label>
         <input
           id="gallery"
           name="gallery"
           type="file"
           accept="image/*"
           multiple
-          className="mt-2 block text-sm text-muted file:mr-3 file:rounded-full file:border-0 file:bg-background file:px-3 file:py-1.5 file:font-mono file:text-xs file:text-foreground hover:file:bg-panel-border"
+          className="mt-3 block text-sm text-muted file:mr-3 file:rounded-full file:border-0 file:bg-background file:px-3 file:py-1.5 file:font-mono file:text-xs file:text-foreground hover:file:bg-panel-border"
         />
       </div>
 

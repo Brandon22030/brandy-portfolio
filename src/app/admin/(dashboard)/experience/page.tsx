@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { deleteExperience } from "@/app/admin/actions/experience";
+import DeleteButton from "@/app/admin/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -48,11 +49,10 @@ export default async function AdminExperiencePage() {
               >
                 Éditer
               </Link>
-              <form action={deleteExperience.bind(null, exp.id)}>
-                <button type="submit" className="font-mono text-xs text-red-600 hover:underline">
-                  Supprimer
-                </button>
-              </form>
+              <DeleteButton
+                action={deleteExperience.bind(null, exp.id)}
+                itemLabel={`${exp.role} — ${exp.company}`}
+              />
             </div>
           </div>
         ))}

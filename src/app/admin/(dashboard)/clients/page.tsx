@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { deleteClientRecord } from "@/app/admin/actions/clients";
+import DeleteButton from "@/app/admin/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -53,11 +54,7 @@ export default async function AdminClientsPage() {
               >
                 Éditer
               </Link>
-              <form action={deleteClientRecord.bind(null, client.id)}>
-                <button type="submit" className="font-mono text-xs text-red-600 hover:underline">
-                  Supprimer
-                </button>
-              </form>
+              <DeleteButton action={deleteClientRecord.bind(null, client.id)} itemLabel={client.name} />
             </div>
           </div>
         ))}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { deleteEducation } from "@/app/admin/actions/education";
+import DeleteButton from "@/app/admin/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -48,11 +49,7 @@ export default async function AdminEducationPage() {
               >
                 Éditer
               </Link>
-              <form action={deleteEducation.bind(null, item.id)}>
-                <button type="submit" className="font-mono text-xs text-red-600 hover:underline">
-                  Supprimer
-                </button>
-              </form>
+              <DeleteButton action={deleteEducation.bind(null, item.id)} itemLabel={item.title} />
             </div>
           </div>
         ))}

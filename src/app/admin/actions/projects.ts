@@ -56,13 +56,12 @@ function readImageFile(formData: FormData): File | null {
   return file instanceof File && file.size > 0 ? file : null;
 }
 
-// The gallery textarea holds the URLs the admin wants to KEEP (one per
-// line — deleting a line removes that photo). New uploads are appended.
+// Each existing gallery photo renders a hidden "existingGallery" input plus
+// a "removeGallery" checkbox next to it — kept = existing minus checked ones.
 function readKeptGalleryUrls(formData: FormData): string[] {
-  return String(formData.get("galleryUrls") ?? "")
-    .split("\n")
-    .map((s) => s.trim())
-    .filter(Boolean);
+  const existing = formData.getAll("existingGallery").map(String);
+  const toRemove = new Set(formData.getAll("removeGallery").map(String));
+  return existing.filter((url) => !toRemove.has(url));
 }
 
 function readGalleryFiles(formData: FormData): File[] {

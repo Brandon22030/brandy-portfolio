@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { deleteProject } from "@/app/admin/actions/projects";
+import DeleteButton from "@/app/admin/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -55,11 +56,7 @@ export default async function AdminProjectsPage() {
               >
                 Éditer
               </Link>
-              <form action={deleteProject.bind(null, project.id)}>
-                <button type="submit" className="font-mono text-xs text-red-600 hover:underline">
-                  Supprimer
-                </button>
-              </form>
+              <DeleteButton action={deleteProject.bind(null, project.id)} itemLabel={project.name} />
             </div>
           </div>
         ))}
