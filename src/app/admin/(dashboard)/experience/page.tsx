@@ -38,7 +38,7 @@ export default async function AdminExperiencePage() {
           >
             <div>
               <p className="font-display text-base font-semibold text-foreground">
-                {exp.role} — {exp.company}
+                {exp.role} - {exp.company}
               </p>
               <p className="mt-1 text-sm text-muted">{exp.period}</p>
             </div>
@@ -51,7 +51,7 @@ export default async function AdminExperiencePage() {
               </Link>
               <DeleteButton
                 action={deleteExperience.bind(null, exp.id)}
-                itemLabel={`${exp.role} — ${exp.company}`}
+                itemLabel={`${exp.role} - ${exp.company}`}
               />
             </div>
           </div>

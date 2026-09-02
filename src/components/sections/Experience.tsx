@@ -21,7 +21,7 @@ export default async function Experience() {
             <Card>
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <h3 className="font-display text-lg font-semibold text-foreground">
-                  {exp.role} <span className="text-muted">— {exp.company}</span>
+                  {exp.role} <span className="text-muted">- {exp.company}</span>
                 </h3>
                 <span className="font-mono text-xs text-accent">{exp.period}</span>
               </div>
