@@ -8,7 +8,7 @@ export const profile = {
   email: "brandonmedehou2203@gmail.com",
   github: "https://github.com/Brandon22030",
   linkedin: "https://linkedin.com/in/brandon-medehou",
-  photo: "/images/brandon.jpg",
+  photo: "/images/brandon-portrait-hd.jpg",
   summary:
     "Développeur fullstack avec 2 ans d'expérience et plus de 4 applications web livrées en production en React, Next.js et JavaScript. Je couvre la chaîne complète : cadrage du besoin, développement des interfaces, APIs et modules back-end en Python, puis déploiement et hébergement sur AWS avec pipelines CI/CD automatisées. J'assure aussi le support de production, habitué au travail en équipe agile (daily, revues de code).",
   aboutDescription:

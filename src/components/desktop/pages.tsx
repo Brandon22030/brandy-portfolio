@@ -52,8 +52,8 @@ function ActionButton({
 }) {
   const className =
     variant === "solid"
-      ? "inline-flex items-center gap-2 rounded-full bg-os-orange px-5 py-2.5 font-mono text-xs font-medium uppercase tracking-[0.15em] text-white transition-transform hover:-translate-y-0.5"
-      : "inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.15em] text-os-cream transition-colors hover:bg-white/10";
+      ? "inline-flex items-center gap-2 rounded-full bg-os-orange px-5 py-2.5 font-mono text-xs font-medium uppercase tracking-[0.15em] text-white transition-transform hover:-translate-y-0.5 max-md:px-6 max-md:py-3.5"
+      : "inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.15em] text-os-cream transition-colors hover:bg-white/10 max-md:px-6 max-md:py-3.5";
   if (href) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
@@ -123,10 +123,10 @@ export function AboutPage({ data, open }: PageProps) {
       <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,300px)_1fr]">
         <div className="relative mx-auto w-full max-w-[300px]">
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-os-panel">
-            <Image src={profile.photo} alt={profile.name} fill sizes="300px" className="object-cover" priority />
+            <Image src={profile.photo} alt={profile.name} fill unoptimized className="object-cover" priority />
           </div>
           <div className="absolute -bottom-8 -right-8 h-32 w-20 rotate-6 drop-shadow-[0_8px_16px_rgba(0,0,0,0.5)] sm:h-40 sm:w-24">
-            <Image src="/images/brandon-sticker.png" alt="" fill sizes="96px" className="object-contain" />
+            <Image src="/images/brandon-sticker.png" alt="" fill unoptimized className="object-contain" />
           </div>
         </div>
 
@@ -523,7 +523,7 @@ export function ContactPage({ data }: PageProps) {
         <div className="flex justify-end border-t border-white/10 px-4 py-3">
           <button
             type="submit"
-            className="inline-flex items-center gap-2 rounded-full bg-os-orange px-5 py-2 font-mono text-xs font-medium uppercase tracking-[0.15em] text-white"
+            className="inline-flex items-center gap-2 rounded-full bg-os-orange px-5 py-2 font-mono text-xs font-medium uppercase tracking-[0.15em] text-white max-md:px-6 max-md:py-3.5"
           >
             Envoyer <Send size={13} />
           </button>

@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, PointerEvent, ReactNode, RefObject } from "react";
+import { useRef, type CSSProperties, type PointerEvent, type ReactNode, type RefObject } from "react";
 import { AnimatePresence, motion, useDragControls, useMotionValue } from "motion/react";
 import { ChevronRight, Maximize2, Minimize2, Minus, Plus, X } from "lucide-react";
 import { tabIcon } from "./sectionIcons";
@@ -53,6 +53,7 @@ export default function OSWindow({
   children: ReactNode;
 }) {
   const controls = useDragControls();
+  const scrollRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const fixed = maximized || compact;
@@ -92,7 +93,6 @@ export default function OSWindow({
         ...geometry,
         x,
         y,
-        transformPerspective: 1400,
         transformOrigin: "50% 100%",
         pointerEvents: state === "minimized" ? "none" : "auto",
       }}
@@ -104,9 +104,9 @@ export default function OSWindow({
       <div
         onPointerDown={startDrag}
         onDoubleClick={toggleMaximize}
-        className={`flex h-11 shrink-0 items-center gap-3 border-b border-white/10 bg-black/30 pl-4 pr-2 ${fixed ? "" : "cursor-grab active:cursor-grabbing"}`}
+        className={`flex h-11 shrink-0 items-center gap-3 border-b max-md:h-12 border-white/10 bg-black/30 pl-4 pr-2 ${fixed ? "" : "cursor-grab active:cursor-grabbing"}`}
       >
-        <div className="group/lights flex shrink-0 items-center gap-2">
+        <div className="group/lights flex shrink-0 items-center gap-2 max-md:gap-3">
           <TrafficLight color="#ff5f57" label="Fermer la fenêtre" onClick={onClose}>
             <X size={8} strokeWidth={3} />
           </TrafficLight>
@@ -130,7 +130,7 @@ export default function OSWindow({
                   initial={{ opacity: 0, width: 0 }}
                   animate={{ opacity: 1, width: "auto" }}
                   exit={{ opacity: 0, width: 0 }}
-                  className={`group/tab flex h-8 min-w-0 max-w-[200px] shrink-0 items-center rounded-lg transition-colors ${
+                  className={`group/tab flex h-8 min-w-0 max-md:h-10 max-w-[200px] shrink-0 items-center rounded-lg transition-colors ${
                     active ? "bg-white/10 text-os-cream" : "text-os-sand hover:bg-white/5 hover:text-os-cream"
                   }`}
                 >
@@ -142,14 +142,14 @@ export default function OSWindow({
                     className="flex min-w-0 flex-1 items-center gap-2 py-1 pl-3 pr-1 text-left"
                   >
                     <Icon size={13} className="shrink-0" />
-                    <span className="truncate text-[12.5px]">{titleOf(tab)}</span>
+                    <span className="truncate text-[12.5px] max-md:text-sm">{titleOf(tab)}</span>
                   </button>
                   <button
                     type="button"
                     aria-label={`Fermer l'onglet ${titleOf(tab)}`}
                     onClick={() => onCloseTab(tab.id)}
-                    className={`mr-1 flex h-5 w-5 shrink-0 items-center justify-center rounded hover:bg-white/15 ${
-                      active ? "opacity-70" : "opacity-0 group-hover/tab:opacity-70"
+                    className={`mr-1 flex h-5 w-5 shrink-0 items-center justify-center rounded hover:bg-white/15 max-md:h-8 max-md:w-8 ${
+                      active ? "opacity-70" : "opacity-0 group-hover/tab:opacity-70 max-md:opacity-60"
                     }`}
                   >
                     <X size={11} />
@@ -162,7 +162,7 @@ export default function OSWindow({
             type="button"
             aria-label="Nouvel onglet"
             onClick={onNewTab}
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-os-sand hover:bg-white/10 hover:text-os-cream"
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-os-sand max-md:h-10 max-md:w-10 hover:bg-white/10 hover:text-os-cream"
           >
             <Plus size={15} />
           </button>
@@ -179,8 +179,9 @@ export default function OSWindow({
         ))}
       </div>
 
-      <div className="os-screen os-scroll relative min-h-0 flex-1 overflow-y-auto [container-type:inline-size]">
-        <AnimatePresence mode="wait" initial={false}>
+      <div ref={scrollRef} className="os-screen os-scroll relative min-h-0 flex-1 overflow-y-auto [container-type:inline-size]">
+        {/* every tab shares this scroller: start the next one at the top once the previous has left */}
+        <AnimatePresence mode="wait" initial={false} onExitComplete={() => scrollRef.current?.scrollTo({ top: 0 })}>
           <motion.div
             key={activeId}
             initial={{ opacity: 0, y: 10 }}
@@ -216,7 +217,7 @@ function TrafficLight({
       aria-label={label}
       onClick={onClick}
       disabled={disabled}
-      className="flex h-3 w-3 items-center justify-center rounded-full text-black/60 disabled:opacity-40"
+      className="relative flex h-3 w-3 items-center justify-center rounded-full text-black/60 after:absolute after:-inset-2 after:content-[''] disabled:opacity-40 max-md:h-4 max-md:w-4"
       style={{ background: color }}
     >
       <span className="opacity-0 transition-opacity group-hover/lights:opacity-100">{children}</span>

@@ -302,7 +302,7 @@ export default function DeskScene({ onEnter }: { onEnter: () => void }) {
             onClick={toggleNight}
             aria-label={night ? "Passer en mode jour" : "Passer en mode nuit (ou cliquer sur la lampe)"}
             title={night ? "Mode jour" : "Mode nuit — ou clique sur la lampe"}
-            className={`flex h-9 w-9 items-center justify-center rounded-full border backdrop-blur transition-colors ${
+            className={`flex h-9 w-9 items-center justify-center rounded-full border backdrop-blur transition-colors max-md:h-11 max-md:w-11 ${
               night
                 ? "border-white/15 bg-white/10 text-os-yellow hover:bg-white/20"
                 : "border-black/15 bg-white/60 text-[#555] hover:bg-[#141416] hover:text-white"
@@ -313,7 +313,7 @@ export default function DeskScene({ onEnter }: { onEnter: () => void }) {
           <button
             type="button"
             onClick={onEnter}
-            className={`rounded-full border px-4 py-2 tracking-[0.2em] backdrop-blur transition-colors ${
+            className={`rounded-full border px-4 py-2 tracking-[0.2em] backdrop-blur transition-colors max-md:py-3.5 ${
               night
                 ? "border-white/15 bg-white/10 hover:bg-os-cream hover:text-[#141416]"
                 : "border-black/15 bg-white/60 hover:bg-[#141416] hover:text-white"

@@ -19,7 +19,7 @@ export default function MenuBar({ menus }: { menus: Menu[] }) {
   return (
     <>
       {openId ? <div className="fixed inset-0 z-[55]" onClick={() => setOpenId(null)} /> : null}
-      <header className="relative z-[60] flex h-7 shrink-0 items-center justify-between bg-black/45 px-2 text-[13px] text-os-cream backdrop-blur-xl">
+      <header className="relative z-[60] flex h-7 shrink-0 max-md:h-10 items-center justify-between bg-black/45 px-2 text-[13px] text-os-cream backdrop-blur-xl">
         <nav className="flex items-center">
           {menus.map((menu) => (
             <div key={menu.id} className={`relative ${menu.desktopOnly ? "max-md:hidden" : ""}`}>
@@ -30,7 +30,7 @@ export default function MenuBar({ menus }: { menus: Menu[] }) {
                 aria-expanded={openId === menu.id}
                 onClick={() => setOpenId(openId === menu.id ? null : menu.id)}
                 onMouseEnter={() => openId && openId !== menu.id && setOpenId(menu.id)}
-                className={`flex h-6 items-center rounded px-2.5 ${menu.bold ? "font-semibold" : ""} ${
+                className={`flex h-6 items-center rounded px-2.5 max-md:h-9 max-md:px-3 max-md:text-[15px] ${menu.bold ? "font-semibold" : ""} ${
                   openId === menu.id ? "bg-white/15" : "hover:bg-white/10"
                 }`}
               >
@@ -44,7 +44,7 @@ export default function MenuBar({ menus }: { menus: Menu[] }) {
                   {menu.items.map((item, i) => {
                     if (item.kind === "separator") return <div key={i} className="mx-2 my-1 h-px bg-white/10" />;
                     const className =
-                      "flex w-full items-center justify-between gap-6 rounded-md px-3 py-1.5 text-left text-[13px] text-os-cream hover:bg-os-orange hover:text-white disabled:pointer-events-none disabled:opacity-40";
+                      "flex w-full items-center justify-between gap-6 rounded-md px-3 py-1.5 text-left text-[13px] max-md:py-3 max-md:text-[15px] text-os-cream hover:bg-os-orange hover:text-white disabled:pointer-events-none disabled:opacity-40";
                     if (item.kind === "link") {
                       return (
                         <a key={i} role="menuitem" href={item.href} className={className}>

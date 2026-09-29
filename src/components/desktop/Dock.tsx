@@ -43,7 +43,7 @@ export default function Dock({
               background={`linear-gradient(160deg, ${section.tint}, color-mix(in oklab, ${section.tint} 55%, #000))`}
             >
               {section.id === "about" ? (
-                <Image src="/images/brandon-sticker.png" alt="" fill sizes="80px" className="object-contain p-[8%]" />
+                <Image src="/images/brandon-sticker.png" alt="" fill unoptimized className="object-contain p-[8%]" />
               ) : (
                 <Icon className="h-[46%] w-[46%] text-[#141416]" strokeWidth={2} />
               )}
@@ -100,7 +100,7 @@ function DockItem({
     <motion.div
       ref={ref}
       style={{ width: size, height: size, background }}
-      className="relative flex items-center justify-center overflow-hidden rounded-[24%] shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_6px_14px_rgba(0,0,0,0.35)] max-sm:!h-11 max-sm:!w-11"
+      className="relative flex items-center justify-center overflow-hidden rounded-[24%] shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_6px_14px_rgba(0,0,0,0.35)] max-sm:!h-12 max-sm:!w-12"
     >
       {children}
     </motion.div>

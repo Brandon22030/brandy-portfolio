@@ -143,14 +143,14 @@ export default function DesktopOS({ data, onShutdown }: { data: PortfolioData; o
     <div className="os-wallpaper flex h-full w-full flex-col overflow-hidden text-os-cream">
       <MenuBar menus={menus} />
 
-      <div ref={desktopRef} className="relative min-h-0 flex-1">
+      <div ref={desktopRef} className="relative min-h-0 flex-1" style={{ perspective: 1400 }}>
         <WelcomeNote />
 
         {/* desktop icons */}
         <div className="absolute right-3 top-3 z-10 hidden flex-col gap-1 md:flex">
           <DesktopIcon label="Brandon.png" onOpen={() => open({ kind: "section", section: "about" })}>
             <div className="relative h-14 w-11">
-              <Image src="/images/brandon-sticker.png" alt="" fill sizes="48px" className="object-contain" />
+              <Image src="/images/brandon-sticker.png" alt="" fill unoptimized className="object-contain" />
             </div>
           </DesktopIcon>
           {SECTIONS.filter((s) => s.id !== "about").map((section) => (
