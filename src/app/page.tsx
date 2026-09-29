@@ -1,50 +1,55 @@
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
-import ContactDock from "@/components/ContactDock";
-import Hero from "@/components/sections/Hero";
-import Clients from "@/components/sections/Clients";
-import About from "@/components/sections/About";
-import Experience from "@/components/sections/Experience";
-import Skills from "@/components/sections/Skills";
-import Projects from "@/components/sections/Projects";
-import Education from "@/components/sections/Education";
-import Contact from "@/components/sections/Contact";
+import { getProfile } from "@/lib/about";
+import { getClients } from "@/lib/clients";
+import { getExperience } from "@/lib/experience";
+import { getSkillGroups } from "@/lib/skills";
+import { getEducationList } from "@/lib/education";
+import { getProjects } from "@/lib/projects";
 import { personJsonLd } from "@/lib/schema";
+import DesktopExperience from "@/components/desktop/DesktopExperience";
 
-export default function Home() {
+export default async function Home() {
+  const [profile, experience, skills, education, projects, clients] = await Promise.all([
+    getProfile(),
+    getExperience(),
+    getSkillGroups(),
+    getEducationList(),
+    getProjects(),
+    getClients(),
+  ]);
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd()) }}
-      />
-      <div className="mx-auto w-full max-w-6xl border-x border-panel-border">
-        <Nav />
-        <main className="relative">
-          <Hero />
-          <Clients />
-          <div className="border-t border-panel-border">
-            <About />
-          </div>
-          <div className="border-t border-panel-border">
-            <Experience />
-          </div>
-          <div className="border-t border-panel-border">
-            <Skills />
-          </div>
-          <div className="border-t border-panel-border">
-            <Projects />
-          </div>
-          <div className="border-t border-panel-border">
-            <Education />
-          </div>
-          <div className="border-t border-panel-border">
-            <Contact />
-          </div>
-        </main>
-        <Footer />
-      </div>
-      <ContactDock />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd()) }} />
+
+      {/* Brandy OS is fully client-side; this server-rendered outline keeps the content crawlable and screen-reader friendly. */}
+      <main className="sr-only">
+        <h1>
+          {profile.name} — {profile.role}
+        </h1>
+        <p>{profile.summary}</p>
+        <h2>Projets</h2>
+        <ul>
+          {projects.map((project) => (
+            <li key={project.slug}>
+              <h3>{project.name}</h3>
+              <p>{project.description}</p>
+            </li>
+          ))}
+        </ul>
+        <h2>Expérience</h2>
+        <ul>
+          {experience.map((exp) => (
+            <li key={`${exp.company}-${exp.period}`}>
+              {exp.role} — {exp.company} ({exp.period})
+            </li>
+          ))}
+        </ul>
+        <p>
+          Contact : <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        </p>
+      </main>
+
+      <DesktopExperience data={{ profile, experience, skills, education, projects, clients }} />
     </>
   );
 }

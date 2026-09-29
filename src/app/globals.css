@@ -23,6 +23,52 @@
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
   --font-mono: var(--font-mono-tech);
+  --font-poster: var(--font-poster-src);
+  --font-poster-inline: var(--font-poster-inline-src);
+
+  /* Brandy OS (/desktop) — dark screen UI + retro desk accents */
+  --color-os-ink: #0b0b0c;
+  --color-os-deep: #141416;
+  --color-os-panel: #1c1c1f;
+  --color-os-line: #2b2b30;
+  --color-os-cream: #f1e9d6;
+  --color-os-sand: #b9b09c;
+  --color-os-orange: #f26b1d;
+  --color-os-lime: #c6ef3a;
+  --color-os-yellow: #f6c332;
+  --color-os-silver: #d8d9dc;
+}
+
+.os-screen {
+  background:
+    radial-gradient(120% 80% at 80% 0%, rgba(242, 107, 29, 0.08), transparent 55%),
+    linear-gradient(180deg, #19191c 0%, #111113 100%);
+}
+
+.os-wallpaper {
+  background-color: #0e0e10;
+  background-image:
+    radial-gradient(60% 50% at 82% 18%, rgba(242, 107, 29, 0.22), transparent 70%),
+    radial-gradient(50% 45% at 10% 95%, rgba(198, 239, 58, 0.12), transparent 70%),
+    linear-gradient(rgba(241, 233, 214, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(241, 233, 214, 0.05) 1px, transparent 1px);
+  background-size: auto, auto, 56px 56px, 56px 56px;
+}
+
+.os-halftone {
+  background-image: radial-gradient(circle, #1a1a1a 1.1px, transparent 1.3px);
+  background-size: 6px 6px;
+}
+
+.os-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(241, 233, 214, 0.2) transparent;
+}
+
+.poster-type {
+  font-optical-sizing: auto;
+  letter-spacing: 0.01em;
+  line-height: 0.85;
 }
 
 html {
@@ -56,33 +102,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
-
-/* Custom cursor: activated by CustomCursor.tsx only on fine-pointer
-   devices once JS has loaded, so touch devices and no-JS keep the
-   native cursor + the button-pointer fallback above. */
-html.custom-cursor * {
-  cursor: none !important;
-}
-
-html.custom-cursor input,
-html.custom-cursor textarea,
-html.custom-cursor select,
-html.custom-cursor [contenteditable="true"] {
-  cursor: text !important;
-}
-
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 28s linear infinite;
-}
 
 @media (prefers-reduced-motion: reduce) {
   html {

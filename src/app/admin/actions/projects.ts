@@ -107,7 +107,6 @@ export async function createProject(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin/projects");
-  revalidatePath(`/projects/${input.slug}`);
   redirect("/admin/projects");
 }
 
@@ -144,7 +143,6 @@ export async function updateProject(id: string, formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin/projects");
-  revalidatePath(`/projects/${input.slug}`);
   redirect("/admin/projects");
 }
 

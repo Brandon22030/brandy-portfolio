@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { display, body, monoTech } from "@/lib/fonts";
-import CustomCursor from "@/components/CustomCursor";
-import PageTransition from "@/components/PageTransition";
+import { display, body, monoTech, poster, posterInline } from "@/lib/fonts";
 import "./globals.css";
 
 const siteUrl = "https://brandon-medehou.dev";
@@ -52,11 +50,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="fr"
       data-scroll-behavior="smooth"
-      className={`${display.variable} ${body.variable} ${monoTech.variable} h-full antialiased`}
+      className={`${display.variable} ${body.variable} ${monoTech.variable} ${poster.variable} ${posterInline.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
-        <CustomCursor />
-        <PageTransition>{children}</PageTransition>
+        {children}
       </body>
     </html>
   );
