@@ -1,7 +1,19 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
+// The bare domain must not serve the site at all: only www.brandythedev.com does.
+const BLOCKED_HOSTS = new Set(["brandythedev.com"]);
+
 export default async function proxy(request: NextRequest) {
+  const host = (request.headers.get("host") ?? "").split(":")[0].toLowerCase();
+  if (BLOCKED_HOSTS.has(host)) {
+    return new NextResponse("Not Found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+  }
+
+  if (!request.nextUrl.pathname.startsWith("/admin")) {
+    return NextResponse.next();
+  }
+
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     // Supabase isn't configured yet (.env.local not filled in) — let the
     // request through instead of crashing; the admin pages themselves will
@@ -52,6 +64,4 @@ export default async function proxy(request: NextRequest) {
   return supabaseResponse;
 }
 
-export const config = {
-  matcher: ["/admin/:path*"],
-};
+// No matcher: the host check above must run on every request, assets included.
