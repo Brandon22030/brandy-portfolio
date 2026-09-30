@@ -7,7 +7,8 @@ import { ContactShadows, Environment, Lightformer, useTexture } from "@react-thr
 import { useReducedMotion } from "motion/react";
 import { Moon, Sun } from "lucide-react";
 import MacBook, { HINGE, MAC } from "./MacBook";
-import { Books, DeskNote, Disc, FlipClock, Mouse, Mug, PencilCup, Poster, Receipt, Room, WALL_Z } from "./Props";
+import { Books, DeskNote, Disc, FlipClock, Mouse, PencilCup, Poster, Receipt, Room, WALL_Z } from "./Props";
+import Mug from "./Mug";
 import Lamp, { LAMP_ANCHOR, LAMP_ANCHOR_PORTRAIT } from "./Lamp";
 import { SCREEN_H, SCREEN_W, createCanvasTexture, drawScreen, loadSceneFonts, repaint, type ScreenMode } from "./textures";
 import { Tween } from "./tween";
@@ -215,7 +216,7 @@ function Experience({
         onToggle={onToggleNight}
         onHover={(hovered) => (lampHovered.current = hovered)}
       />
-      <Mug position={[-0.98, 0, 0.5]} />
+      <Mug position={[-1.05, 0, 0.1]} rotationY={0.22} scale={1.4} />
       <Disc position={[-1.45, 0, 0.72]} />
       <PencilCup position={[1.02, 0, -0.35]} />
       <FlipClock position={[1.55, 0, -0.45]} />

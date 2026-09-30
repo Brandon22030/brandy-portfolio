@@ -65,29 +65,6 @@ export function Books({ position }: { position: [number, number, number] }) {
   );
 }
 
-export function Mug({ position }: { position: [number, number, number] }) {
-  return (
-    <group position={position} rotation={[0, -0.5, 0]}>
-      <mesh position={[0, 0.1, 0]} castShadow receiveShadow>
-        <cylinderGeometry args={[0.085, 0.08, 0.2, 48]} />
-        <meshStandardMaterial color="#f7f5f1" roughness={0.3} />
-      </mesh>
-      <mesh position={[0, 0.212, 0]} castShadow>
-        <cylinderGeometry args={[0.09, 0.09, 0.03, 48]} />
-        <meshStandardMaterial color={COLORS.orange} roughness={0.35} />
-      </mesh>
-      <mesh position={[0, 0.232, 0]} castShadow>
-        <cylinderGeometry args={[0.03, 0.03, 0.012, 24]} />
-        <meshStandardMaterial color="#d95a12" roughness={0.35} />
-      </mesh>
-      <mesh position={[0.085, 0.105, 0]} rotation={[0, 0, -Math.PI / 2]} castShadow>
-        <torusGeometry args={[0.05, 0.013, 16, 32, Math.PI]} />
-        <meshStandardMaterial color="#f7f5f1" roughness={0.3} />
-      </mesh>
-    </group>
-  );
-}
-
 export function Disc({ position }: { position: [number, number, number] }) {
   return (
     <group position={position} rotation={[0, 0.4, 0]}>
