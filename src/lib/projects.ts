@@ -3,8 +3,10 @@ import { projects as staticProjects, type Project } from "@/lib/data";
 import { createClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/slug";
 
-const PROJECT_COLUMNS =
-  "slug, name, description, intro, features, category, client, project_date, stack, image_url, gallery_urls, live_url, github_url, figma_url";
+// "*" rather than an explicit column list: a column added in a newer
+// migration that hasn't been run yet can't make the whole query fail
+// (which would silently fall back to the static projects).
+const PROJECT_COLUMNS = "*";
 
 type ProjectRow = {
   slug: string | null;
@@ -21,6 +23,7 @@ type ProjectRow = {
   live_url: string | null;
   github_url: string | null;
   figma_url: string | null;
+  in_progress?: boolean | null;
 };
 
 function mapRow(row: ProjectRow): Project {
@@ -39,6 +42,7 @@ function mapRow(row: ProjectRow): Project {
     liveUrl: row.live_url ?? undefined,
     githubUrl: row.github_url ?? undefined,
     figmaUrl: row.figma_url ?? undefined,
+    inProgress: row.in_progress ?? false,
   };
 }
 

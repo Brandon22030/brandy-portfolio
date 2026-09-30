@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, type FormEvent, type ReactNode } from "react";
-import { ArrowRight, ArrowUpRight, MapPin, Send } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Construction, MapPin, Send } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
 import { languages, type Project } from "@/lib/data";
 import { projectGradient } from "@/lib/palette";
@@ -226,30 +226,56 @@ function InfoBlock({ title, children }: { title: string; children: ReactNode }) 
 
 /* ------------------------------------------------------------------ */
 
+/** Diagonal caution tape laid across a project visual, for projects still being built. */
+function ConstructionTape({ large = false }: { large?: boolean }) {
+  const label = "EN CHANTIER · BIENTÔT DISPO · ";
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+      <div className={`absolute -inset-x-10 flex -rotate-[8deg] flex-col shadow-[0_8px_24px_rgba(0,0,0,0.45)] ${large ? "h-20" : "h-11"}`}>
+        <div className={`hazard-stripes ${large ? "h-3" : "h-1.5"}`} />
+        <div className="flex flex-1 items-center overflow-hidden whitespace-nowrap bg-os-yellow">
+          <span className={`font-poster font-bold tracking-wide text-[#141416] ${large ? "text-3xl" : "text-lg"}`}>
+            {label.repeat(8)}
+          </span>
+        </div>
+        <div className={`hazard-stripes ${large ? "h-3" : "h-1.5"}`} />
+      </div>
+    </div>
+  );
+}
+
 function ProjectCard({ project, index, onOpen }: { project: Project; index: number; onOpen: () => void }) {
   return (
     <button
       type="button"
       onClick={onOpen}
-      className="group flex flex-col overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] text-left transition-all hover:-translate-y-1 hover:border-os-orange/60 hover:bg-white/[0.06]"
+      className={`group flex flex-col overflow-hidden rounded-xl border bg-white/[0.03] text-left transition-all hover:-translate-y-1 hover:bg-white/[0.06] ${
+        project.inProgress ? "border-os-yellow/40 hover:border-os-yellow" : "border-white/10 hover:border-os-orange/60"
+      }`}
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden" style={project.imageUrl ? undefined : { background: projectGradient(index) }}>
-        {project.imageUrl ? (
-          <Image
-            src={project.imageUrl}
-            alt=""
-            fill
-            sizes="(min-width: 1024px) 320px, 50vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center">
-            <FolderGlyph className="w-1/4 opacity-90" tint="#f1e9d6" />
-          </div>
-        )}
+        <div className={`absolute inset-0 ${project.inProgress ? "brightness-[0.55] grayscale-[0.7]" : ""}`}>
+          {project.imageUrl ? (
+            <Image
+              src={project.imageUrl}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 320px, 50vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <FolderGlyph className="w-1/4 opacity-90" tint="#f1e9d6" />
+            </div>
+          )}
+        </div>
+        {project.inProgress ? <ConstructionTape /> : null}
       </div>
       <div className="flex flex-1 flex-col gap-2 p-4">
-        <p className="font-poster text-2xl font-semibold uppercase leading-none text-os-cream">{project.name}</p>
+        <p className="flex items-center gap-2 font-poster text-2xl font-semibold uppercase leading-none text-os-cream">
+          {project.name}
+          {project.inProgress ? <Construction size={18} className="shrink-0 text-os-yellow" aria-label="En chantier" /> : null}
+        </p>
         <p className="line-clamp-1 font-mono text-[11px] text-os-sand">
           {project.category ? `${project.category} · ` : ""}
           {project.stack.slice(0, 3).join(" · ")}
@@ -296,17 +322,37 @@ export function ProjectPage({ data, slug }: { data: PortfolioData; slug: string 
       </h1>
       <p className="mt-5 max-w-3xl text-[15px] leading-relaxed text-os-sand">{project.description}</p>
 
+      {project.inProgress ? (
+        <div className="mt-8 overflow-hidden rounded-xl border border-os-yellow/50">
+          <div className="hazard-stripes h-2" />
+          <div className="flex items-center gap-4 bg-os-yellow/10 px-5 py-4">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-os-yellow text-[#141416]">
+              <Construction size={22} />
+            </span>
+            <div>
+              <p className="font-poster text-2xl font-bold uppercase leading-none text-os-yellow">Projet en chantier</p>
+              <p className="mt-1.5 text-sm text-os-cream/80">
+                Je travaille dessus en ce moment : il n&apos;est pas encore disponible, mais ça arrive bientôt.
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       <div
         className="relative mt-8 aspect-video w-full overflow-hidden rounded-xl border border-white/10"
         style={project.imageUrl ? undefined : { background: projectGradient(Math.max(index, 0)) }}
       >
-        {project.imageUrl ? (
-          <Image src={project.imageUrl} alt={project.name} fill sizes="(min-width: 1024px) 960px, 100vw" className="object-cover" />
-        ) : (
-          <div className="flex h-full items-center justify-center">
-            <p className="font-poster text-[clamp(40px,8cqw,110px)] font-semibold uppercase text-white/90">{project.name}</p>
-          </div>
-        )}
+        <div className={`absolute inset-0 ${project.inProgress ? "brightness-[0.55] grayscale-[0.7]" : ""}`}>
+          {project.imageUrl ? (
+            <Image src={project.imageUrl} alt={project.name} fill sizes="(min-width: 1024px) 960px, 100vw" className="object-cover" />
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <p className="font-poster text-[clamp(40px,8cqw,110px)] font-semibold uppercase text-white/90">{project.name}</p>
+            </div>
+          )}
+        </div>
+        {project.inProgress ? <ConstructionTape large /> : null}
       </div>
 
       {project.galleryUrls && project.galleryUrls.length > 0 ? (

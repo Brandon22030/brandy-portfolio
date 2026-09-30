@@ -31,7 +31,10 @@ export default async function Home() {
         <ul>
           {projects.map((project) => (
             <li key={project.slug}>
-              <h3>{project.name}</h3>
+              <h3>
+                {project.name}
+                {project.inProgress ? " (en chantier)" : ""}
+              </h3>
               <p>{project.description}</p>
             </li>
           ))}

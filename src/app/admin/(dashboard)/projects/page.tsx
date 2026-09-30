@@ -45,7 +45,14 @@ export default async function AdminProjectsPage() {
                 </div>
               ) : null}
               <div className="min-w-0">
-                <p className="font-display text-base font-semibold text-foreground">{project.name}</p>
+                <p className="flex items-center gap-2 font-display text-base font-semibold text-foreground">
+                  {project.name}
+                  {project.in_progress ? (
+                    <span className="rounded-full bg-amber-100 px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wide text-amber-800">
+                      En chantier
+                    </span>
+                  ) : null}
+                </p>
                 <p className="mt-1 line-clamp-1 text-sm text-muted">{project.description}</p>
               </div>
             </div>

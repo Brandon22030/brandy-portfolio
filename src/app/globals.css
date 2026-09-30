@@ -60,6 +60,10 @@
   background-size: 6px 6px;
 }
 
+.hazard-stripes {
+  background: repeating-linear-gradient(-45deg, #f6c332 0 12px, #141416 12px 24px);
+}
+
 .os-scroll {
   scrollbar-width: thin;
   scrollbar-color: rgba(241, 233, 214, 0.2) transparent;

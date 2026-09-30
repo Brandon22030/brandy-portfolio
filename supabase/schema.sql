@@ -23,6 +23,7 @@ create table if not exists public.projects (
   live_url text,
   github_url text,
   figma_url text,
+  in_progress boolean not null default false,
   sort_order integer not null default 0,
   created_at timestamptz not null default now()
 );
@@ -36,6 +37,7 @@ alter table public.projects add column if not exists features text[];
 alter table public.projects add column if not exists category text;
 alter table public.projects add column if not exists client text;
 alter table public.projects add column if not exists project_date text;
+alter table public.projects add column if not exists in_progress boolean not null default false;
 
 -- Backfill a slug for any existing row that doesn't have one yet (simple
 -- ASCII slugify — good enough as a fallback; edit per-project in /admin if

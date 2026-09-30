@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Construction } from "lucide-react";
 
 type ProjectDefaults = {
   slug?: string;
@@ -15,6 +16,7 @@ type ProjectDefaults = {
   live_url?: string | null;
   github_url?: string | null;
   figma_url?: string | null;
+  in_progress?: boolean | null;
   sort_order?: number;
 };
 
@@ -32,6 +34,24 @@ export default function ProjectForm({
 
   return (
     <form action={action} className="space-y-5 rounded-2xl border border-panel-border bg-background-elevated p-6">
+      <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4">
+        <input
+          type="checkbox"
+          name="inProgress"
+          defaultChecked={Boolean(defaults?.in_progress)}
+          className="mt-0.5 h-4 w-4 accent-amber-500"
+        />
+        <span>
+          <span className="flex items-center gap-1.5 text-sm font-medium text-foreground">
+            <Construction size={15} className="text-amber-600" /> Projet en chantier
+          </span>
+          <span className="mt-0.5 block text-xs text-muted">
+            Coche si le projet n&apos;est pas encore disponible : il s&apos;affichera avec un design « en chantier » sur le
+            portfolio.
+          </span>
+        </span>
+      </label>
+
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className={label}>

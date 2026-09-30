@@ -19,6 +19,7 @@ export type ProjectInput = {
   liveUrl: string | null;
   githubUrl: string | null;
   figmaUrl: string | null;
+  inProgress: boolean;
   sortOrder: number;
 };
 
@@ -47,6 +48,7 @@ function readProjectForm(formData: FormData): ProjectInput {
     liveUrl: String(formData.get("liveUrl") ?? "").trim() || null,
     githubUrl: String(formData.get("githubUrl") ?? "").trim() || null,
     figmaUrl: String(formData.get("figmaUrl") ?? "").trim() || null,
+    inProgress: formData.get("inProgress") === "on",
     sortOrder: Number(formData.get("sortOrder") ?? 0),
   };
 }
@@ -101,6 +103,7 @@ export async function createProject(formData: FormData) {
     live_url: input.liveUrl,
     github_url: input.githubUrl,
     figma_url: input.figmaUrl,
+    in_progress: input.inProgress,
     sort_order: input.sortOrder,
   });
   if (error) throw new Error(error.message);
@@ -131,6 +134,7 @@ export async function updateProject(id: string, formData: FormData) {
     live_url: input.liveUrl,
     github_url: input.githubUrl,
     figma_url: input.figmaUrl,
+    in_progress: input.inProgress,
     sort_order: input.sortOrder,
   };
 

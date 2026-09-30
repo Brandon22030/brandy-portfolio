@@ -150,6 +150,8 @@ export type Project = {
   liveUrl?: string;
   githubUrl?: string;
   figmaUrl?: string;
+  /** Still being built: shown with a "en chantier" treatment. */
+  inProgress?: boolean;
 };
 
 export const projects: Project[] = [
