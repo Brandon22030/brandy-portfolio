@@ -181,6 +181,36 @@ export function drawDigits(ctx: CanvasRenderingContext2D, value: string) {
   ctx.fillRect(0, 108, 256, 7);
 }
 
+export function drawStickyNote(ctx: CanvasRenderingContext2D, night: boolean) {
+  const W = 512;
+  const H = 512;
+  ctx.clearRect(0, 0, W, H);
+  const paper = ctx.createLinearGradient(0, 0, 0, H);
+  paper.addColorStop(0, "#ffe27a");
+  paper.addColorStop(1, "#f6c332");
+  ctx.fillStyle = paper;
+  ctx.fillRect(0, 0, W, H);
+  // adhesive strip, slightly darker
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0, 0, W, 70);
+  ctx.fillStyle = "#1a1a1a";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "alphabetic";
+  ctx.font = `800 104px ${posterFont()}`;
+  ctx.fillText("TOUCHE-MOI", W / 2, 180, W - 50);
+  ctx.font = `700 84px ${posterFont()}`;
+  const [line1, line2] = night ? ["POUR RALLUMER", "LE JOUR"] : ["SI T'AS PAS", "PEUR DU NOIR"];
+  ctx.fillText(line1, W / 2, 290, W - 60);
+  ctx.fillText(line2, W / 2, 380, W - 60);
+  ctx.strokeStyle = "#f26b1d";
+  ctx.lineWidth = 9;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(110, 430);
+  ctx.quadraticCurveTo(W / 2, 462, W - 110, 424);
+  ctx.stroke();
+}
+
 export function noteTexture() {
   return paint(1200, 380, (ctx) => {
     ctx.fillStyle = COLORS.paper;

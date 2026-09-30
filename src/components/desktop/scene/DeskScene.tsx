@@ -207,6 +207,7 @@ function Experience({
       <Books position={[-1.95, 0, -0.62]} />
       <Lamp
         anchor={portrait ? LAMP_ANCHOR_PORTRAIT : LAMP_ANCHOR}
+        night={night}
         bulbRef={bulbRef}
         innerRef={shadeInnerRef}
         spotRef={spotRef}

@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useRef, useState, type Ref } from "react";
+import { useEffect, useMemo, useRef, useState, type Ref } from "react";
 import * as THREE from "three";
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
+import { createCanvasTexture, drawStickyNote, repaint } from "./textures";
 
 /*
  * Pendant lamp: matte black egg-shaped dome with a copper inside, hanging
@@ -33,6 +34,7 @@ const DAMPING = 0.7;
 
 export default function Lamp({
   anchor = LAMP_ANCHOR,
+  night,
   bulbRef,
   innerRef,
   spotRef,
@@ -41,6 +43,7 @@ export default function Lamp({
   onHover,
 }: {
   anchor?: THREE.Vector3;
+  night: boolean;
   bulbRef: Ref<THREE.MeshStandardMaterial>;
   innerRef: Ref<THREE.MeshStandardMaterial>;
   spotRef: Ref<THREE.SpotLight>;
@@ -50,6 +53,8 @@ export default function Lamp({
 }) {
   const dome = useMemo(() => new THREE.LatheGeometry(DOME_PROFILE, 64), []);
   const pivot = useRef<THREE.Group>(null);
+  const note = useMemo(() => createCanvasTexture(512, 512), []);
+  useEffect(() => repaint(note, (ctx) => drawStickyNote(ctx, night)), [note, night]);
   const swing = useRef({ angle: 0, velocity: 0 });
   const [target] = useState(() => {
     const object = new THREE.Object3D();
@@ -118,6 +123,18 @@ export default function Lamp({
         <mesh rotation={[Math.PI / 2, 0, 0]}>
           <torusGeometry args={[SHADE_RADIUS, 0.004, 8, 96]} />
           <meshStandardMaterial color="#b9773f" metalness={0.9} roughness={0.3} />
+        </mesh>
+        {/* sticky note on the front of the dome, hinting that the lamp is clickable */}
+        <mesh position={[0.012, 0.15, SHADE_RADIUS * 0.96]} rotation={[-0.18, 0, -0.1]} castShadow>
+          <planeGeometry args={[0.21, 0.21]} />
+          {/* self-lit at night so it stays readable in the dark room */}
+          <meshStandardMaterial
+            map={note.texture}
+            emissiveMap={note.texture}
+            emissive="#ffffff"
+            emissiveIntensity={night ? 0.6 : 0}
+            roughness={0.85}
+          />
         </mesh>
         <mesh position={[0, 0.07, 0]}>
           <sphereGeometry args={[0.05, 24, 24]} />
