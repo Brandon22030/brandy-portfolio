@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { display, body, monoTech, poster, posterInline } from "@/lib/fonts";
 import "./globals.css";
 
-const siteUrl = "https://brandon-medehou.dev";
+const siteUrl = "https://www.brandythedev.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

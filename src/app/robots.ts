@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://brandon-medehou.dev/sitemap.xml",
+    sitemap: "https://www.brandythedev.com/sitemap.xml",
   };
 }
