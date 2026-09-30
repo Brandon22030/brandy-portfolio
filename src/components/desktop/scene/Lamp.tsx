@@ -1,191 +1,152 @@
 "use client";
 
-import { useMemo, type Ref } from "react";
+import { useMemo, useRef, useState, type Ref } from "react";
 import * as THREE from "three";
-import type { ThreeEvent } from "@react-three/fiber";
-import { COLORS } from "./textures";
+import { useFrame, type ThreeEvent } from "@react-three/fiber";
 
 /*
- * Articulated architect desk lamp. Built in its own local frame (arm reaching
- * along +x), then placed and turned on the desk. The joint positions below
- * also drive where the night-time spot light sits and aims.
+ * Pendant lamp: matte black egg-shaped dome with a copper inside, hanging
+ * from a cord that leaves the top of the frame. It swings like a damped
+ * pendulum when hovered or clicked.
  */
 
-const BASE_HINGE = new THREE.Vector3(0, 0.08, 0);
-const ELBOW = new THREE.Vector3(0.1, 0.5, 0);
-const HEAD = new THREE.Vector3(0.46, 0.6, 0);
-const SHADE_TILT = 0.3;
-const SHADE_DIRECTION = new THREE.Vector3(Math.sin(SHADE_TILT), -Math.cos(SHADE_TILT), 0);
-const BULB_LOCAL = HEAD.clone().addScaledVector(SHADE_DIRECTION, 0.11);
-const AIM_LOCAL = BULB_LOCAL.clone().addScaledVector(SHADE_DIRECTION, BULB_LOCAL.y / Math.cos(SHADE_TILT));
+const CEILING_Y = 3.8;
+const SHADE_BOTTOM_Y = 1.1;
+const SHADE_HEIGHT = 0.36;
+const SHADE_RADIUS = 0.21;
+const CORD_LENGTH = CEILING_Y - (SHADE_BOTTOM_Y + SHADE_HEIGHT);
 
-export const LAMP = {
-  position: new THREE.Vector3(-1.32, 0, -0.14),
-  rotationY: -0.16,
-  scale: 1.22,
-};
+// Right of the laptop on wide screens; centred above it in portrait, where the side is off-frame.
+// Both stay clear of the lid's opening sweep (lid tip reaches 0.86 from the hinge).
+export const LAMP_ANCHOR = new THREE.Vector3(1.0, CEILING_Y, 0);
+export const LAMP_ANCHOR_PORTRAIT = new THREE.Vector3(0, CEILING_Y, 0);
 
-function toWorld(local: THREE.Vector3) {
-  return local
-    .clone()
-    .multiplyScalar(LAMP.scale)
-    .applyAxisAngle(new THREE.Vector3(0, 1, 0), LAMP.rotationY)
-    .add(LAMP.position);
-}
+// egg dome profile, rim → crown (lathe normals face outward when the profile runs bottom → top)
+const DOME_PROFILE = Array.from({ length: 25 }, (_, i) => {
+  const t = i / 24;
+  const radius = SHADE_RADIUS * Math.pow(1 - Math.pow(t, 2.4), 0.5);
+  return new THREE.Vector2(Math.max(radius, 0.018), t * SHADE_HEIGHT);
+});
 
-export const LAMP_BULB_WORLD = toWorld(BULB_LOCAL);
-export const LAMP_AIM_WORLD = toWorld(AIM_LOCAL);
-
-const CREAM = "#f4f1ea";
-
-function Rod({ from, to, radius = 0.0075, offsetZ = 0 }: { from: THREE.Vector3; to: THREE.Vector3; radius?: number; offsetZ?: number }) {
-  const { position, quaternion, length } = useMemo(() => {
-    const direction = to.clone().sub(from);
-    return {
-      length: direction.length(),
-      position: from.clone().add(to).multiplyScalar(0.5).add(new THREE.Vector3(0, 0, offsetZ)),
-      quaternion: new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize()),
-    };
-  }, [from, to, offsetZ]);
-  return (
-    <mesh position={position} quaternion={quaternion} castShadow>
-      <cylinderGeometry args={[radius, radius, length, 12]} />
-      <meshStandardMaterial color={CREAM} roughness={0.35} metalness={0.3} />
-    </mesh>
-  );
-}
-
-function Joint({ at, radius = 0.024 }: { at: THREE.Vector3; radius?: number }) {
-  return (
-    <mesh position={at} rotation={[Math.PI / 2, 0, 0]} castShadow>
-      <cylinderGeometry args={[radius, radius, 0.068, 24]} />
-      <meshStandardMaterial color={COLORS.orange} roughness={0.35} />
-    </mesh>
-  );
-}
-
-function Spring() {
-  const geometry = useMemo(() => {
-    const start = BASE_HINGE.clone().add(new THREE.Vector3(-0.028, 0.06, 0));
-    const end = ELBOW.clone().add(new THREE.Vector3(-0.028, -0.1, 0));
-    const axis = end.clone().sub(start);
-    const side = new THREE.Vector3(0, 0, 1);
-    const normal = new THREE.Vector3().crossVectors(axis, side).normalize();
-    const points: THREE.Vector3[] = [];
-    const turns = 16;
-    for (let i = 0; i <= turns * 12; i++) {
-      const t = i / (turns * 12);
-      const angle = t * turns * Math.PI * 2;
-      points.push(
-        start
-          .clone()
-          .addScaledVector(axis, t)
-          .addScaledVector(normal, Math.cos(angle) * 0.01)
-          .addScaledVector(side, Math.sin(angle) * 0.01),
-      );
-    }
-    return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points), turns * 24, 0.0022, 6);
-  }, []);
-  return (
-    <mesh geometry={geometry} castShadow>
-      <meshStandardMaterial color="#8d9096" metalness={0.8} roughness={0.3} />
-    </mesh>
-  );
-}
-
-const SHADE_PROFILE = [
-  [0.026, 0.004],
-  [0.034, -0.012],
-  [0.05, -0.04],
-  [0.075, -0.08],
-  [0.103, -0.13],
-  [0.128, -0.178],
-  [0.132, -0.186],
-]
-  // lathe normals face outward when the profile runs bottom → top
-  .reverse()
-  .map(([r, y]) => new THREE.Vector2(r, y));
+const GRAVITY_OVER_LENGTH = 9.8 / (CEILING_Y - SHADE_BOTTOM_Y);
+const DAMPING = 0.7;
 
 export default function Lamp({
+  anchor = LAMP_ANCHOR,
   bulbRef,
   innerRef,
+  spotRef,
+  glowRef,
   onToggle,
   onHover,
 }: {
+  anchor?: THREE.Vector3;
   bulbRef: Ref<THREE.MeshStandardMaterial>;
   innerRef: Ref<THREE.MeshStandardMaterial>;
+  spotRef: Ref<THREE.SpotLight>;
+  glowRef: Ref<THREE.PointLight>;
   onToggle: () => void;
   onHover: (hovered: boolean) => void;
 }) {
-  const shade = useMemo(() => new THREE.LatheGeometry(SHADE_PROFILE, 48), []);
+  const dome = useMemo(() => new THREE.LatheGeometry(DOME_PROFILE, 64), []);
+  const pivot = useRef<THREE.Group>(null);
+  const swing = useRef({ angle: 0, velocity: 0 });
+  const [target] = useState(() => {
+    const object = new THREE.Object3D();
+    object.position.set(-0.12, -2, 0.25);
+    return object;
+  });
+
+  function push(strength: number) {
+    swing.current.velocity += strength;
+  }
+
+  useFrame((_, delta) => {
+    const s = swing.current;
+    const dt = Math.min(delta, 1 / 30);
+    s.velocity += (-GRAVITY_OVER_LENGTH * s.angle - DAMPING * s.velocity) * dt;
+    s.angle += s.velocity * dt;
+    if (pivot.current) pivot.current.rotation.z = s.angle;
+  });
+
+  const shadeY = -CORD_LENGTH - SHADE_HEIGHT;
 
   return (
-    <group
-      position={LAMP.position}
-      rotation={[0, LAMP.rotationY, 0]}
-      scale={LAMP.scale}
-      onClick={(event: ThreeEvent<MouseEvent>) => {
-        event.stopPropagation();
-        onToggle();
-      }}
-      onPointerOver={(event: ThreeEvent<PointerEvent>) => {
-        event.stopPropagation();
-        document.body.style.cursor = "pointer";
-        onHover(true);
-      }}
-      onPointerOut={() => {
-        document.body.style.cursor = "";
-        onHover(false);
-      }}
-    >
-      {/* weighted base */}
-      <mesh position={[0, 0.018, 0]} castShadow receiveShadow>
-        <cylinderGeometry args={[0.118, 0.13, 0.036, 48]} />
-        <meshStandardMaterial color={COLORS.orange} roughness={0.38} />
-      </mesh>
-      <mesh position={[0, 0.05, 0]} castShadow>
-        <cylinderGeometry args={[0.038, 0.05, 0.03, 32]} />
-        <meshStandardMaterial color={CREAM} roughness={0.35} metalness={0.3} />
+    <group ref={pivot} position={anchor}>
+      <mesh position={[0, -CORD_LENGTH / 2, 0]}>
+        <cylinderGeometry args={[0.004, 0.004, CORD_LENGTH, 8]} />
+        <meshStandardMaterial color="#111" roughness={0.6} />
       </mesh>
 
-      {/* double arms, joints and spring */}
-      {[-0.022, 0.022].map((z) => (
-        <group key={z}>
-          <Rod from={BASE_HINGE} to={ELBOW} offsetZ={z} />
-          <Rod from={ELBOW} to={HEAD} offsetZ={z} />
-        </group>
-      ))}
-      <Joint at={BASE_HINGE} />
-      <Joint at={ELBOW} />
-      <Joint at={HEAD} radius={0.02} />
-      <Spring />
-
-      {/* conical shade, cream inside so it glows when the lamp is on */}
-      <group position={HEAD} rotation={[0, 0, SHADE_TILT]}>
-        <mesh position={[0, 0.012, 0]} castShadow>
-          <cylinderGeometry args={[0.03, 0.03, 0.03, 24]} />
-          <meshStandardMaterial color={COLORS.orange} roughness={0.35} />
+      <group
+        position={[0, shadeY, 0]}
+        onClick={(event: ThreeEvent<MouseEvent>) => {
+          event.stopPropagation();
+          push(0.28);
+          onToggle();
+        }}
+        onPointerOver={(event: ThreeEvent<PointerEvent>) => {
+          event.stopPropagation();
+          document.body.style.cursor = "pointer";
+          push(0.08);
+          onHover(true);
+        }}
+        onPointerOut={() => {
+          document.body.style.cursor = "";
+          onHover(false);
+        }}
+      >
+        {/* cap where the cord enters the dome */}
+        <mesh position={[0, SHADE_HEIGHT + 0.012, 0]} castShadow>
+          <cylinderGeometry args={[0.03, 0.036, 0.05, 32]} />
+          <meshStandardMaterial color="#121212" roughness={0.45} metalness={0.4} />
         </mesh>
-        <mesh geometry={shade}>
-          <meshStandardMaterial color={COLORS.orange} roughness={0.32} side={THREE.FrontSide} />
+        <mesh geometry={dome} castShadow>
+          <meshStandardMaterial color="#141414" roughness={0.55} metalness={0.35} side={THREE.FrontSide} />
         </mesh>
-        <mesh geometry={shade}>
-          <meshStandardMaterial ref={innerRef} color="#fbf3e2" emissive="#ffb35c" emissiveIntensity={0} roughness={0.6} side={THREE.BackSide} />
+        <mesh geometry={dome}>
+          <meshStandardMaterial
+            ref={innerRef}
+            color="#c9874a"
+            emissive="#ffb35c"
+            emissiveIntensity={0}
+            metalness={0.9}
+            roughness={0.28}
+            side={THREE.BackSide}
+          />
         </mesh>
-        <mesh position={[0, -0.186, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.132, 0.004, 8, 64]} />
-          <meshStandardMaterial color={CREAM} roughness={0.35} metalness={0.3} />
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[SHADE_RADIUS, 0.004, 8, 96]} />
+          <meshStandardMaterial color="#b9773f" metalness={0.9} roughness={0.3} />
         </mesh>
-        <mesh position={[0, -0.11, 0]}>
-          <sphereGeometry args={[0.038, 24, 24]} />
+        <mesh position={[0, 0.07, 0]}>
+          <sphereGeometry args={[0.05, 24, 24]} />
           <meshStandardMaterial ref={bulbRef} color="#fff6e6" emissive="#ffc27a" emissiveIntensity={0} roughness={0.2} />
         </mesh>
-      </group>
 
-      {/* generous invisible hit area so the whole lamp is easy to click */}
-      <mesh position={[0.24, 0.34, 0]} visible={false}>
-        <boxGeometry args={[0.72, 0.72, 0.28]} />
-      </mesh>
+        {/* night light: its shadow camera starts past the dome so the shade doesn't block its own bulb */}
+        <primitive object={target} />
+        <spotLight
+          ref={spotRef}
+          position={[0, 0.06, 0]}
+          target={target}
+          color="#ffb56b"
+          intensity={0}
+          angle={0.78}
+          penumbra={0.75}
+          distance={4}
+          decay={1.5}
+          castShadow
+          shadow-mapSize={[1024, 1024]}
+          shadow-camera-near={0.35}
+          shadow-bias={-0.0006}
+        />
+        <pointLight ref={glowRef} position={[0, 0.1, 0]} color="#ffc27a" intensity={0} distance={0.6} decay={2} />
+
+        <mesh position={[0, SHADE_HEIGHT / 2, 0]} visible={false}>
+          <sphereGeometry args={[SHADE_RADIUS * 1.25, 12, 12]} />
+        </mesh>
+      </group>
     </group>
   );
 }

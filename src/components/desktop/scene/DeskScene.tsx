@@ -8,7 +8,7 @@ import { useReducedMotion } from "motion/react";
 import { Moon, Sun } from "lucide-react";
 import MacBook, { HINGE, MAC } from "./MacBook";
 import { Books, DeskNote, Disc, FlipClock, Mouse, Mug, PencilCup, Poster, Receipt, Room, WALL_Z } from "./Props";
-import Lamp, { LAMP_AIM_WORLD, LAMP_BULB_WORLD } from "./Lamp";
+import Lamp, { LAMP_ANCHOR, LAMP_ANCHOR_PORTRAIT } from "./Lamp";
 import { SCREEN_H, SCREEN_W, createCanvasTexture, drawScreen, loadSceneFonts, repaint, type ScreenMode } from "./textures";
 import { Tween } from "./tween";
 
@@ -80,11 +80,6 @@ function Experience({
   const bulbGlowRef = useRef<THREE.PointLight>(null);
   const bulbRef = useRef<THREE.MeshStandardMaterial>(null);
   const shadeInnerRef = useRef<THREE.MeshStandardMaterial>(null);
-  const [spotTarget] = useState(() => {
-    const target = new THREE.Object3D();
-    target.position.copy(LAMP_AIM_WORLD);
-    return target;
-  });
 
   const screen = useMemo(() => createCanvasTexture(SCREEN_W, SCREEN_H), []);
   const mascot = useTexture("/images/brandon-sticker.png").image as HTMLImageElement;
@@ -140,7 +135,7 @@ function Experience({
     if (bulbGlowRef.current) bulbGlowRef.current.intensity = 0.7 * n;
     const hoverGlow = lampHovered.current ? 0.8 : 0;
     if (bulbRef.current) bulbRef.current.emissiveIntensity = 7 * n + hoverGlow;
-    if (shadeInnerRef.current) shadeInnerRef.current.emissiveIntensity = 1.4 * n + hoverGlow * 0.4;
+    if (shadeInnerRef.current) shadeInnerRef.current.emissiveIntensity = 2.2 * n + hoverGlow * 0.4;
 
     // screen
     const mode: ScreenMode = stage === "booting" ? "boot" : stage === "zooming" ? "preview" : "title";
@@ -193,22 +188,6 @@ function Experience({
         shadow-radius={5}
       />
       <directionalLight ref={fillRef} position={[3, 2.2, 2.5]} intensity={0.45} />
-      <primitive object={spotTarget} />
-      <spotLight
-        ref={spotRef}
-        position={LAMP_BULB_WORLD}
-        target={spotTarget}
-        color="#ffb56b"
-        intensity={0}
-        angle={0.72}
-        penumbra={0.7}
-        distance={4}
-        decay={1.6}
-        castShadow
-        shadow-mapSize={[1024, 1024]}
-        shadow-bias={-0.0006}
-      />
-      <pointLight ref={bulbGlowRef} position={LAMP_BULB_WORLD} color="#ffc27a" intensity={0} distance={0.7} decay={2} />
       {/* soft light spilling from the screen onto the keyboard at night */}
       <pointLight ref={screenGlowRef} position={[0, 0.45, -0.1]} color="#ffcf9e" intensity={0} distance={1.6} decay={2} />
       <Environment resolution={128}>
@@ -227,8 +206,11 @@ function Experience({
       <Receipt position={[1.42, 1.18, WALL_Z + 0.003]} />
       <Books position={[-1.95, 0, -0.62]} />
       <Lamp
+        anchor={portrait ? LAMP_ANCHOR_PORTRAIT : LAMP_ANCHOR}
         bulbRef={bulbRef}
         innerRef={shadeInnerRef}
+        spotRef={spotRef}
+        glowRef={bulbGlowRef}
         onToggle={onToggleNight}
         onHover={(hovered) => (lampHovered.current = hovered)}
       />
@@ -309,17 +291,6 @@ export default function DeskScene({ onEnter }: { onEnter: () => void }) {
             }`}
           >
             {night ? <Sun size={15} /> : <Moon size={15} />}
-          </button>
-          <button
-            type="button"
-            onClick={onEnter}
-            className={`rounded-full border px-4 py-2 tracking-[0.2em] backdrop-blur transition-colors max-md:py-3.5 ${
-              night
-                ? "border-white/15 bg-white/10 hover:bg-os-cream hover:text-[#141416]"
-                : "border-black/15 bg-white/60 hover:bg-[#141416] hover:text-white"
-            }`}
-          >
-            Passer l&apos;intro →
           </button>
         </div>
       </header>
