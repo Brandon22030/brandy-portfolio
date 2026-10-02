@@ -59,7 +59,7 @@ function readImageFile(formData: FormData): File | null {
 }
 
 // Each existing gallery photo renders a hidden "existingGallery" input plus
-// a "removeGallery" checkbox next to it — kept = existing minus checked ones.
+// a "removeGallery" checkbox next to it - kept = existing minus checked ones.
 function readKeptGalleryUrls(formData: FormData): string[] {
   const existing = formData.getAll("existingGallery").map(String);
   const toRemove = new Set(formData.getAll("removeGallery").map(String));

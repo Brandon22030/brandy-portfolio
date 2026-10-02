@@ -36,7 +36,7 @@ export function useClock() {
   );
 }
 
-/** Minutes since epoch (0 during SSR/hydration) — a stable snapshot that ticks once a minute. */
+/** Minutes since epoch (0 during SSR/hydration) - a stable snapshot that ticks once a minute. */
 export function useMinute() {
   return useSyncExternalStore(
     subscribeClock,
@@ -61,7 +61,7 @@ export function setIntroSeen(seen: boolean) {
     if (seen) window.sessionStorage.setItem(INTRO_KEY, "1");
     else window.sessionStorage.removeItem(INTRO_KEY);
   } catch {
-    // storage unavailable (private mode) — the intro simply replays
+    // storage unavailable (private mode) - the intro simply replays
   }
   introListeners.forEach((listener) => listener());
 }

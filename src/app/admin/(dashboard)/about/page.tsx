@@ -95,7 +95,7 @@ export default async function AdminAboutPage() {
 
           <div>
             <label htmlFor="stats" className={label}>
-              Chiffres clés (JSON — tableau de {"{"}value, label{"}"})
+              Chiffres clés (JSON - tableau de {"{"}value, label{"}"})
             </label>
             <textarea
               id="stats"

@@ -240,7 +240,7 @@ function WelcomeNote() {
         Tu es sur mon Mac. Ouvre les dossiers à droite ou passe par le dock : chaque dossier s&apos;ouvre dans un
         onglet.
       </p>
-      <p className="mt-3 text-right font-poster text-xl font-semibold">— Brandon</p>
+      <p className="mt-3 text-right font-poster text-xl font-semibold">- Brandon</p>
     </motion.div>
   );
 }

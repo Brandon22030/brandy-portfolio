@@ -37,7 +37,7 @@ const BOOKS = [
   { label: "Next.js", bg: "#efe6d2", fg: "#222222", w: 0.07, h: 0.45 },
   { label: "Python", bg: COLORS.paper, fg: "#222222", w: 0.068, h: 0.55 },
   { label: "AWS · CI/CD", bg: COLORS.lime, fg: "#1c1c1c", w: 0.09, h: 0.53 },
-  { label: "2023 — 2026", bg: COLORS.yellow, fg: "#1c1c1c", w: 0.075, h: 0.47 },
+  { label: "2023 - 2026", bg: COLORS.yellow, fg: "#1c1c1c", w: 0.075, h: 0.47 },
 ];
 
 export function Books({ position }: { position: [number, number, number] }) {

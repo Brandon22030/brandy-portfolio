@@ -12,7 +12,7 @@ import { COLORS } from "./textures";
  * the mascot as a sticker wrapped on the wall, and looping steam wisps.
  */
 
-// (radius, height) — bottom → outer wall → lip → inner wall → inner floor
+// (radius, height) - bottom → outer wall → lip → inner wall → inner floor
 const BODY_PROFILE = [
   [0.001, 0.002],
   [0.066, 0.0],

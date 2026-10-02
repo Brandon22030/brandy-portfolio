@@ -248,7 +248,7 @@ export default function DeskScene({ onEnter }: { onEnter: () => void }) {
     try {
       window.localStorage.setItem(NIGHT_KEY, next ? "1" : "0");
     } catch {
-      // storage unavailable — the choice just won't be remembered
+      // storage unavailable - the choice just won't be remembered
     }
   }
 
@@ -285,7 +285,7 @@ export default function DeskScene({ onEnter }: { onEnter: () => void }) {
             type="button"
             onClick={toggleNight}
             aria-label={night ? "Passer en mode jour" : "Passer en mode nuit (ou cliquer sur la lampe)"}
-            title={night ? "Mode jour" : "Mode nuit — ou clique sur la lampe"}
+            title={night ? "Mode jour" : "Mode nuit - ou clique sur la lampe"}
             className={`flex h-9 w-9 items-center justify-center rounded-full border backdrop-blur transition-colors max-md:h-11 max-md:w-11 ${
               night
                 ? "border-white/15 bg-white/10 text-os-yellow hover:bg-white/20"

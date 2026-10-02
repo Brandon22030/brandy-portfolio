@@ -26,7 +26,7 @@
   --font-poster: var(--font-poster-src);
   --font-poster-inline: var(--font-poster-inline-src);
 
-  /* Brandy OS (/desktop) — dark screen UI + retro desk accents */
+  /* Brandy OS (/desktop) - dark screen UI + retro desk accents */
   --color-os-ink: #0b0b0c;
   --color-os-deep: #141416;
   --color-os-panel: #1c1c1f;
@@ -95,7 +95,7 @@ body {
 }
 
 /* Baseline: browsers don't give <button> a pointer cursor by default
-   (only <a href> does) — fix that regardless of the custom cursor below. */
+   (only <a href> does) - fix that regardless of the custom cursor below. */
 button:not(:disabled),
 [role="button"],
 a {

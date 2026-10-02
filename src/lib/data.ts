@@ -32,7 +32,7 @@ export const experience: Experience[] = [
   {
     company: "ADELABS",
     role: "Développeur Fullstack & Odoo",
-    period: "juin 2025 — août 2026",
+    period: "juin 2025 - août 2026",
     location: "Cotonou, Bénin",
     highlights: [
       "Conçu et livré 4+ applications web en production en React / Next.js / JavaScript (ES6+) : composants implémentés à partir de maquettes Figma, stylés en SASS/SCSS (architecture BEM) pour sa flexibilité, architecture en composants réutilisables, responsivité et compatibilité navigateurs.",
@@ -48,26 +48,26 @@ export const experience: Experience[] = [
   {
     company: "Société Générale Bénin",
     role: "Stagiaire Développeur Web",
-    period: "nov. 2024 — mars 2025",
+    period: "nov. 2024 - mars 2025",
     location: "Cotonou, Bénin",
     highlights: ["Stage au sein de la direction informatique d'un grand groupe bancaire."],
   },
   {
     company: "Vertim Coders",
     role: "Stagiaire Développeur Web",
-    period: "janv. 2024 — avr. 2024",
+    period: "janv. 2024 - avr. 2024",
     location: "Tankpè, Bénin",
     highlights: [
       "Intégré des interfaces Vue.js à partir de maquettes en respectant les contraintes d'ergonomie, et mis en ligne des sites WordPress pour les clients de l'agence.",
     ],
   },
   {
-    company: "Freelance — BRANDYBEN",
+    company: "Freelance - BRANDYBEN",
     role: "Développeur & Designer indépendant",
-    period: "2023 — 2024",
+    period: "2023 - 2024",
     location: "Cotonou, Bénin",
     highlights: [
-      "Conception de maquettes sous Figma, création d'identités visuelles et de logos, développement de sites, thèmes et extensions WordPress sur mesure — du besoin client à la livraison.",
+      "Conception de maquettes sous Figma, création d'identités visuelles et de logos, développement de sites, thèmes et extensions WordPress sur mesure - du besoin client à la livraison.",
     ],
   },
 ];
@@ -268,17 +268,17 @@ export const education: EducationItem[] = [
   {
     title: "Certification Développeur Fullstack",
     school: "Coding Academy by EPITECH · Cotonou, Bénin",
-    period: "juin 2024 — juin 2025",
+    period: "juin 2024 - juin 2025",
   },
   {
     title: "Licence 3 d'Anglais (Bac+3)",
     school: "Faculté des Lettres, Langues et Arts de Calavi (FLLAC) · Abomey-Calavi, Bénin",
-    period: "2021 — 2024",
+    period: "2021 - 2024",
   },
   {
     title: "Certificat en Compétences Numériques Fondamentales",
     school: "ECOLE229 · Cotonou, Bénin",
-    period: "2023 — 2024",
+    period: "2023 - 2024",
   },
 ];
 
@@ -293,7 +293,7 @@ export type Client = {
   websiteUrl?: string;
 };
 
-// No static clients yet — the "Mes clients" section only renders once
+// No static clients yet - the "Mes clients" section only renders once
 // clients are added via the admin panel (see src/lib/clients.ts).
 export const clients: Client[] = [];
 

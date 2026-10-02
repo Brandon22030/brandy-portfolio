@@ -167,7 +167,7 @@ export default function ProjectForm({
           className="mt-2 block text-sm text-muted file:mr-3 file:rounded-full file:border-0 file:bg-background file:px-3 file:py-1.5 file:font-mono file:text-xs file:text-foreground hover:file:bg-panel-border"
         />
         <p className="mt-1 text-xs text-muted">
-          {defaults?.image_url ? "Laisse vide pour garder l'image actuelle." : "Optionnel — sans image, un dégradé de couleur est utilisé."}
+          {defaults?.image_url ? "Laisse vide pour garder l'image actuelle." : "Optionnel - sans image, un dégradé de couleur est utilisé."}
         </p>
       </div>
 

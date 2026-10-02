@@ -17,7 +17,7 @@ function PageHeader({ section, title, aside }: { section: SectionId; title: Reac
     <header className="flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-6">
       <div>
         <p className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: meta.tint }}>
-          {meta.number} — {meta.label}
+          {meta.number} - {meta.label}
         </p>
         <h1 className="mt-3 font-poster text-[clamp(52px,10cqw,128px)] font-semibold uppercase leading-[0.84] text-os-cream">
           {title}
@@ -131,7 +131,7 @@ export function AboutPage({ data, open }: PageProps) {
         </div>
 
         <div className="min-w-0">
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-os-yellow">01 — Introduction</p>
+          <p className="font-mono text-xs uppercase tracking-[0.3em] text-os-yellow">01 - Introduction</p>
           <h1 className="mt-3 font-poster text-[clamp(56px,10cqw,136px)] font-semibold uppercase leading-[0.84] text-os-cream">
             {first}
             <br />
@@ -359,7 +359,7 @@ export function ProjectPage({ data, slug }: { data: PortfolioData; slug: string 
         <div className="os-scroll mt-3 flex gap-3 overflow-x-auto pb-2">
           {project.galleryUrls.map((url, i) => (
             <div key={url} className="relative h-28 w-44 shrink-0 overflow-hidden rounded-lg border border-white/10">
-              <Image src={url} alt={`${project.name} — photo ${i + 2}`} fill sizes="176px" className="object-cover" />
+              <Image src={url} alt={`${project.name} - photo ${i + 2}`} fill sizes="176px" className="object-cover" />
             </div>
           ))}
         </div>
@@ -519,7 +519,7 @@ export function ContactPage({ data }: PageProps) {
   return (
     <div className="grid gap-10 px-6 py-8 sm:px-12 sm:py-12 lg:grid-cols-[1fr_1.1fr]">
       <div>
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-os-cream">06 — Contact</p>
+        <p className="font-mono text-xs uppercase tracking-[0.3em] text-os-cream">06 - Contact</p>
         <h1 className="mt-3 font-poster text-[clamp(52px,9cqw,120px)] font-semibold uppercase leading-[0.84] text-os-cream">
           Travaillons
           <br />

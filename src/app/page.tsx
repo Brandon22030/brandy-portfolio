@@ -24,7 +24,7 @@ export default async function Home() {
       {/* Brandy OS is fully client-side; this server-rendered outline keeps the content crawlable and screen-reader friendly. */}
       <main className="sr-only">
         <h1>
-          {profile.name} — {profile.role}
+          {profile.name} - {profile.role}
         </h1>
         <p>{profile.summary}</p>
         <h2>Projets</h2>
@@ -43,7 +43,7 @@ export default async function Home() {
         <ul>
           {experience.map((exp) => (
             <li key={`${exp.company}-${exp.period}`}>
-              {exp.role} — {exp.company} ({exp.period})
+              {exp.role} - {exp.company} ({exp.period})
             </li>
           ))}
         </ul>

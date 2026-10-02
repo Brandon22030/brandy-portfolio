@@ -43,7 +43,7 @@ export default function EducationForm({
           name="period"
           required
           defaultValue={defaults?.period}
-          placeholder="juin 2024 — juin 2025"
+          placeholder="juin 2024 - juin 2025"
           className={field}
         />
       </div>

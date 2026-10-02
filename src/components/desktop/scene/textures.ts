@@ -162,7 +162,7 @@ export function receiptTexture() {
     });
     ctx.font = `500 22px ${monoFont()}`;
     ctx.textBaseline = "top";
-    ["DEV FULLSTACK", "REACT · NEXT.JS", "PYTHON · AWS", "", "— COTONOU, BJ"].forEach((line, i) => {
+    ["DEV FULLSTACK", "REACT · NEXT.JS", "PYTHON · AWS", "", "- COTONOU, BJ"].forEach((line, i) => {
       ctx.fillStyle = i === 4 ? "#888" : "#222";
       ctx.fillText(line, 26, 176 + i * 34);
     });
@@ -315,7 +315,7 @@ export function drawScreen(
 
     ctx.font = `500 30px ${monoFont()}`;
     ctx.fillStyle = COLORS.cream;
-    ctx.fillText("2023 — 2026", 80, 680);
+    ctx.fillText("2023 - 2026", 80, 680);
     ctx.fillText("DEV FULLSTACK", 80, 718);
     ctx.textAlign = "center";
     ctx.fillText("COTONOU", W / 2, 680);

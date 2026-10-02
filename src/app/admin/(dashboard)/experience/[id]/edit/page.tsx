@@ -13,7 +13,7 @@ export default async function EditExperiencePage({ params }: { params: Promise<{
   return (
     <div>
       <h1 className="font-display text-2xl font-semibold text-foreground">
-        Éditer {exp.role} — {exp.company}
+        Éditer {exp.role} - {exp.company}
       </h1>
       <div className="mt-6">
         <ExperienceForm action={updateExperience.bind(null, id)} defaults={exp} submitLabel="Enregistrer" />

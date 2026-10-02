@@ -40,7 +40,7 @@ alter table public.projects add column if not exists project_date text;
 alter table public.projects add column if not exists in_progress boolean not null default false;
 
 -- Backfill a slug for any existing row that doesn't have one yet (simple
--- ASCII slugify — good enough as a fallback; edit per-project in /admin if
+-- ASCII slugify - good enough as a fallback; edit per-project in /admin if
 -- a name has accents you'd rather see spelled out in the URL).
 update public.projects
 set slug = trim(both '-' from regexp_replace(lower(name), '[^a-z0-9]+', '-', 'g'))
@@ -115,7 +115,7 @@ create policy "Authenticated users can delete projects"
   using (true);
 
 -- ---------------------------------------------------------------------
--- profile (singleton — always a single row with id = 1)
+-- profile (singleton - always a single row with id = 1)
 -- ---------------------------------------------------------------------
 
 create table if not exists public.profile (

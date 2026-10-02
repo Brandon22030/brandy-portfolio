@@ -44,7 +44,7 @@ export default function ExperienceForm({
             name="period"
             required
             defaultValue={defaults?.period}
-            placeholder="juin 2025 — août 2026"
+            placeholder="juin 2025 - août 2026"
             className={field}
           />
         </div>

@@ -15,7 +15,7 @@ export default async function proxy(request: NextRequest) {
   }
 
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    // Supabase isn't configured yet (.env.local not filled in) — let the
+    // Supabase isn't configured yet (.env.local not filled in) - let the
     // request through instead of crashing; the admin pages themselves will
     // show a clear error when they try to query Supabase.
     return NextResponse.next({ request });
